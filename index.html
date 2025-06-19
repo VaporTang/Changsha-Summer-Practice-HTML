@@ -14,7 +14,7 @@
     /* CSS 变量定义 */
     :root {
       --primary-color: #c41e3a;
-      --primary-dark: #a01729;
+      --primary-dark: #a01729;      /*#a01729*/
       --primary-light: #fef7f8;
       --text-color: #333;
       --text-light: #666;
@@ -135,14 +135,15 @@
     }
 
     /* 英雄区域优化 */
+    /* rgba(196, 30, 58, 0.9), rgba(196, 30, 58, 0.7) */
     .hero {
-      background: linear-gradient(135deg, rgba(196, 30, 58, 0.9), rgba(196, 30, 58, 0.7)),
+      background: linear-gradient(135deg, rgba(196, 30, 58, 1), rgba(196, 30, 58, 0.8)),
       url('data:image/svg+xml,<svg xmlns="<http://www.w3.org/2000/svg>" viewBox="0 0 1200 600"><rect fill="%23c41e3a" width="1200" height="600"/><path fill="%23fff" opacity="0.1" d="M0 300L50 325L100 300L150 275L200 300L250 325L300 300L350 275L400 300L450 325L500 300L550 275L600 300L650 325L700 300L750 275L800 300L850 325L900 300L950 275L1000 300L1050 325L1100 300L1150 275L1200 300V600H0V300Z"/></svg>');
       background-size: cover;
       background-position: center;
       color: var(--white);
       text-align: center;
-      padding: 10rem 20px 6rem;
+      padding: 6rem 20px 3rem;/* padding: 10rem 20px 6rem; */
       margin-top: 60px;
       position: relative;
     }
