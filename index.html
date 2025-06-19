@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>湘当红小队 - 北京林业大学社会实践团队</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* 导航栏 */
+        nav {
+            background-color: #c41e3a;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav li {
+            margin: 0 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* 头部横幅 */
+        .hero {
+            background: linear-gradient(rgba(196, 30, 58, 0.8), rgba(196, 30, 58, 0.8)), url('data:image/svg+xml,<svg xmlns="<http://www.w3.org/2000/svg>" viewBox="0 0 1200 600"><rect fill="%23c41e3a" width="1200" height="600"/><path fill="%23fff" opacity="0.1" d="M0 300L50 325L100 300L150 275L200 300L250 325L300 300L350 275L400 300L450 325L500 300L550 275L600 300L650 325L700 300L750 275L800 300L850 325L900 300L950 275L1000 300L1050 325L1100 300L1150 275L1200 300V600H0V300Z"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 150px 20px 100px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 40px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #c41e3a;
+            font-size: 32px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #c41e3a;
+        }
+
+        .section h3 {
+            color: #333;
+            font-size: 24px;
+            margin: 20px 0 15px;
+        }
+
+        /* 团队成员卡片 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .member-card {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .member-card h4 {
+            color: #c41e3a;
+            margin-bottom: 10px;
+        }
+
+        .member-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 行程日历 */
+        .schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .day-card {
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+            border-left: 5px solid #c41e3a;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .day-card h4 {
+            color: #c41e3a;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .day-card .location {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        /* 成果展示 */
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .achievement-item {
+            background: #fef7f8;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #f0d0d5;
+        }
+
+        .achievement-item .icon {
+            font-size: 48px;
+            color: #c41e3a;
+            margin-bottom: 15px;
+        }
+
+        /* 引用样式 */
+        .quote {
+            background: #fef7f8;
+            border-left: 5px solid #c41e3a;
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav li {
+                margin: 5px 0;
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#about">项目概述</a></li>
+            <li><a href="#team">团队成员</a></li>
+            <li><a href="#schedule">实践行程</a></li>
+            <li><a href="#achievements">预期成果</a></li>
+            <li><a href="#safety">安全保障</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部横幅 -->
+    <div class="hero">
+        <h1>湘当红小队</h1>
+        <p>北京林业大学2025年"青春向党"红色教育专项实践团队</p>
+        <p style="font-size: 18px;">重走长沙红色足迹，赓续湖湘革命精神</p>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 项目概述 -->
+        <section id="about" class="section fade-in">
+            <h2>项目概述</h2>
+            <p>为传承红色基因、厚植家国情怀，结合纪念抗日战争胜利80周年主题，本项目以长沙红色资源为依托，设计"历史寻访—理论浸润—实践赋能"三位一体的五天暑期社会实践，在行走中感悟革命精神，在服务中践行时代担当。</p>
+
+            <div class="quote">
+                "问苍茫大地，谁主沉浮" —— 让我们追寻革命先辈的足迹，在新时代书写青春答卷
+            </div>
+
+            <h3>实践地点</h3>
+            <p>湖南长沙 - 中国革命重要策源地</p>
+
+            <h3>实践时间</h3>
+            <p>2025年7月11日 - 7月15日（共5天）</p>
+
+            <h3>指导单位</h3>
+            <p>北京林业大学人文社会科学学院</p>
+        </section>
+
+        <!-- 团队成员 -->
+        <section id="team" class="section fade-in">
+            <h2>团队成员</h2>
+            <p>我们是一支来自北京林业大学的跨学院青年团队，怀揣着对红色历史的敬仰和传承使命的担当。</p>
+
+            <div class="team-grid">
+                <div class="member-card">
+                    <h4>李宇欣</h4>
+                    <p>团队负责人</p>
+                    <p>人文社会科学学院 法学242班</p>
+                    <p>负责项目统筹协调</p>
+                </div>
+                <div class="member-card">
+                    <h4>杨雯祺</h4>
+                    <p>核心成员</p>
+                    <p>人文社会科学学院 法学242班</p>
+                    <p>负责撰写提交手册</p>
+                </div>
+                <div class="member-card">
+                    <h4>高佳琦</h4>
+                    <p>核心成员</p>
+                    <p>人文社会科学学院 心理243班</p>
+                    <p>负责活动拍摄</p>
+                </div>
+                <div class="member-card">
+                    <h4>黎安然</h4>
+                    <p>核心成员</p>
+                    <p>人文社会科学学院 法学卓越24班</p>
+                    <p>负责内容策划</p>
+                </div>
+                <div class="member-card">
+                    <h4>姜泓菲</h4>
+                    <p>核心成员</p>
+                    <p>人文社会科学学院 法学241班</p>
+                    <p>负责文字撰写</p>
+                </div>
+                <div class="member-card">
+                    <h4>袁桦</h4>
+                    <p>核心成员</p>
+                    <p>人文社会科学学院 法学卓越24班</p>
+                    <p>负责跟拍视频</p>
+                </div>
+                <div class="member-card">
+                    <h4>龙丹伟</h4>
+                    <p>核心成员</p>
+                    <p>工学院 自动化243班</p>
+                    <p>负责后勤保障</p>
+                </div>
+                <div class="member-card">
+                    <h4>唐锦梁</h4>
+                    <p>核心成员</p>
+                    <p>工学院 自动化243班</p>
+                    <p>负责视频剪辑</p>
+                </div>
+                <div class="member-card">
+                    <h4>骆成至</h4>
+                    <p>核心成员</p>
+                    <p>工学院 机械244班</p>
+                    <p>负责制作推送</p>
+                </div>
+                <div class="member-card">
+                    <h4>张钊远</h4>
+                    <p>核心成员</p>
+                    <p>理学院 电子242班</p>
+                    <p>负责文字撰写</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">指导教师</h3>
+            <p><strong>蔡燊</strong> - 人文社会科学学院 顾问</p>
+        </section>
+
+        <!-- 实践行程 -->
+        <section id="schedule" class="section fade-in">
+            <h2>五天实践行程</h2>
+            <p>以"红迹为纲、精神为魂、行动为要"，串联起青年理想、党史传承、奉献担当的逻辑主线。</p>
+
+            <div class="schedule">
+                <div class="day-card">
+                    <h4>第一天：对话青年先辈</h4>
+                    <p class="location">📍 橘子洲头</p>
+                    <p>瞻仰毛泽东青年艺术雕塑，回溯革命先辈"问苍茫大地，谁主沉浮"的磅礴胸怀。开展"青春对话先辈"主题分享会，探讨新时代青年如何接续奋斗。</p>
+                </div>
+
+                <div class="day-card">
+                    <h4>第二天：探寻革命启蒙</h4>
+                    <p class="location">📍 湖南第一师范旧址</p>
+                    <p>走访毛泽东、蔡和森等先辈求学地，还原"指点江山"的青春现场。开展"模拟先辈课堂"体验，研讨求知与报国的辩证关系。</p>
+                </div>
+
+                <div class="day-card">
+                    <h4>第三天：缅怀热血英魂</h4>
+                    <p class="location">📍 烈士公园</p>
+                    <p>开展"青言青语"国防教育宣讲调研活动，向观众普及国防教育知识。开展环境清洁、便民服务等志愿行动，讲述湖湘英烈故事。</p>
+                </div>
+
+                <div class="day-card">
+                    <h4>第四天：回溯烽火岁月</h4>
+                    <p class="location">📍 岳麓山抗战文化园</p>
+                    <p>探访岳麓山抗战遗址，深挖长沙会战等历史细节。以青年视角诠释"山河不屈、全民御敌"的爱国精神，让抗战记忆照进现实。</p>
+                </div>
+
+                <div class="day-card">
+                    <h4>第五天：解码湖湘党史</h4>
+                    <p class="location">📍 长沙党史馆</p>
+                    <p>系统学习新民主主义革命时期湖湘党组织的诞生、抗争与发展。通过党史调研，挖掘湖南共产党人坚守初心的动人故事。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 预期成果 -->
+        <section id="achievements" class="section fade-in">
+            <h2>预期目标与成果</h2>
+
+            <h3>核心目标</h3>
+            <div class="achievements">
+                <div class="achievement-item">
+                    <div class="icon">🎯</div>
+                    <h4>深化红色基因传承</h4>
+                    <p>重走红色足迹，体悟建党初心与抗战精神</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">🛡️</div>
+                    <h4>创新国防教育实践</h4>
+                    <p>以"青言青语"普及国防知识，践行青年责任</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">📢</div>
+                    <h4>锻造青年宣讲能力</h4>
+                    <p>提炼党的理论青年化阐述方法，提升政治传播力</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">📚</div>
+                    <h4>凝练抗战80周年成果</h4>
+                    <p>记录英雄事迹，输出可推广的红色教育素材</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">具体成果</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>✅ 橘子洲头宣誓仪式视频及主题推文</li>
+                <li>✅ 烈士公园社区国防教育活动纪实</li>
+                <li>✅ 湖南第一师范"红色课堂"青年版解说词</li>
+                <li>✅ 岳麓山抗战文化园研学视频</li>
+                <li>✅ 收集抗战故事5+则</li>
+                <li>✅ 直接触达社区群众超50人</li>
+                <li>✅ 产出全媒体成果包1套（含视频6支、图文报告4份）</li>
+            </ul>
+        </section>
+
+        <!-- 安全保障 -->
+        <section id="safety" class="section fade-in">
+            <h2>安全保障措施</h2>
+            <p>团队高度重视实践安全，制定了完善的风险防控和应急处理机制。</p>
+
+            <h3>健康防护</h3>
+            <ul>
+                <li>配备防暑物资：藿香正气水、便携风扇</li>
+                <li>气温超35°C时调整户外活动时间</li>
+                <li>医护家长提供急救培训支持</li>
+            </ul>
+
+            <h3>交通安全</h3>
+            <ul>
+                <li>统一乘坐公共交通工具</li>
+                <li>合伙出行，严禁私自离队</li>
+                <li>建立紧急联络机制</li>
+            </ul>
+
+            <h3>应急处理</h3>
+            <ul>
+                <li>制定详细应急预案</li>
+                <li>每半天报备位置及状态</li>
+                <li>配备急救联系方式</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>北京林业大学 湘当红小队</p>
+        <p>2025年"青春向党"红色教育专项实践团队</p>
+        <p style="margin-top: 20px; font-size: 14px;">© 2025 北京林业大学人文社会科学学院</p>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+
