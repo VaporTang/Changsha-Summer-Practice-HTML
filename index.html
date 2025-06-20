@@ -263,18 +263,41 @@
     }
 
     /* 日程卡片特殊样式 */
-    .day-card {
+    /*.day-card {
       background: linear-gradient(135deg, var(--white) 0%, var(--bg-color) 100%);
       border-left: 5px solid var(--primary-color);
       padding: 2rem;
       border-radius: 12px;
       transition: var(--transition);
+    }*/
+    .day-card {
+      background: linear-gradient(135deg, var(--white) 0%, var(--bg-color) 100%);
+      border-left: 5px solid var(--primary-color);
+      padding: 0; /* 修改为0，因为要加入图片 */
+      border-radius: 12px;
+      transition: var(--transition);
+      overflow: hidden; /* 确保图片圆角 */
     }
 
+    .day-card-content {
+      padding: 2rem;
+    }
+
+    .day-card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
     .day-card:hover {
       transform: scale(1.02);
       box-shadow: var(--shadow-lg);
     }
+
+    /*.day-card:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }*/
 
     .day-card h4 {
       color: var(--primary-color);
@@ -652,35 +675,54 @@
     <section id="schedule" class="section fade-in">
       <h2>五天实践行程</h2>
       <p class="text-center mb-4">以"红迹为纲、精神为魂、行动为要"，串联起青年理想、党史传承、奉献担当的逻辑主线。</p>
-
       <div class="grid grid-2">
         <div class="day-card">
-          <h4>第一天：对话青年先辈</h4>
-          <p class="location">橘子洲头</p>
-          <p>瞻仰毛泽东青年艺术雕塑，回溯革命先辈"问苍茫大地，谁主沉浮"的磅礴胸怀。开展"青春对话先辈"主题分享会，探讨新时代青年如何接续奋斗。</p>
+          <img src="<https://img.vaporr4s.eu.org/halo/2025/06/42b910cb8d415b02881536470112f262.jpg>" alt="橘子洲头" class="day-card-image">
+          <div class="day-card-content">
+            <h4>第一天：对话青年先辈</h4>
+            <p class="location">橘子洲头</p>
+            <p>瞻仰毛泽东青年艺术雕塑，回溯革命先辈"问苍茫大地，谁主沉浮"的磅礴胸怀。开展"青春对话先辈"主题分享会，探讨新时代青年如何接续奋斗。</p>
+          </div>
         </div>
+
         <div class="day-card">
-          <h4>第二天：探寻革命启蒙</h4>
-          <p class="location">湖南第一师范旧址</p>
-          <p>走访毛泽东、蔡和森等先辈求学地，还原"指点江山"的青春现场。开展"模拟先辈课堂"体验，研讨求知与报国的辩证关系。</p>
+          <img src="<https://example.com/day2.jpg>" alt="湖南第一师范旧址" class="day-card-image">
+          <div class="day-card-content">
+            <h4>第二天：探寻革命启蒙</h4>
+            <p class="location">湖南第一师范旧址</p>
+            <p>走访毛泽东、蔡和森等先辈求学地，还原"指点江山"的青春现场。开展"模拟先辈课堂"体验，研讨求知与报国的辩证关系。</p>
+          </div>
         </div>
+
         <div class="day-card">
-          <h4>第三天：缅怀热血英魂</h4>
-          <p class="location">烈士公园</p>
-          <p>开展"青言青语"国防教育宣讲调研活动，向观众普及国防教育知识。开展环境清洁、便民服务等志愿行动，讲述湖湘英烈故事。</p>
+          <img src="<https://example.com/day3.jpg>" alt="烈士公园" class="day-card-image">
+          <div class="day-card-content">
+            <h4>第三天：缅怀热血英魂</h4>
+            <p class="location">烈士公园</p>
+            <p>开展"青言青语"国防教育宣讲调研活动，向观众普及国防教育知识。开展环境清洁、便民服务等志愿行动，讲述湖湘英烈故事。</p>
+          </div>
         </div>
+
         <div class="day-card">
-          <h4>第四天：回溯烽火岁月</h4>
-          <p class="location">岳麓山抗战文化园</p>
-          <p>探访岳麓山抗战遗址，深挖长沙会战等历史细节。以青年视角诠释"山河不屈、全民御敌"的爱国精神，让抗战记忆照进现实。</p>
+          <img src="<https://example.com/day4.jpg>" alt="岳麓山抗战文化园" class="day-card-image">
+          <div class="day-card-content">
+            <h4>第四天：回溯烽火岁月</h4>
+            <p class="location">岳麓山抗战文化园</p>
+            <p>探访岳麓山抗战遗址，深挖长沙会战等历史细节。以青年视角诠释"山河不屈、全民御敌"的爱国精神，让抗战记忆照进现实。</p>
+          </div>
         </div>
+
         <div class="day-card">
-          <h4>第五天：解码湖湘党史</h4>
-          <p class="location">长沙党史馆</p>
-          <p>系统学习新民主主义革命时期湖湘党组织的诞生、抗争与发展。通过党史调研，挖掘湖南共产党人坚守初心的动人故事。</p>
+          <img src="<https://example.com/day5.jpg>" alt="长沙党史馆" class="day-card-image">
+          <div class="day-card-content">
+            <h4>第五天：解码湖湘党史</h4>
+            <p class="location">长沙党史馆</p>
+            <p>系统学习新民主主义革命时期湖湘党组织的诞生、抗争与发展。通过党史调研，挖掘湖南共产党人坚守初心的动人故事。</p>
+          </div>
         </div>
       </div>
     </section>
+
 
     <!-- 预期成果 -->
     <section id="achievements" class="section fade-in">
@@ -889,6 +931,23 @@
   }
 
   window.addEventListener('scroll', updateScrollProgress);
+
+  // 在 <script> 标签中添加
+  // 图片懒加载
+  const lazyImages = document.querySelectorAll('.day-card-image');
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+        observer.unobserve(img);
+      }
+    });
+  });
+
+  lazyImages.forEach(img => imageObserver.observe(img));
+
 </script>
 </body>
 </html>
