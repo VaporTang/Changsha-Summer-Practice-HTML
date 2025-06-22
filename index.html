@@ -274,6 +274,7 @@
             color: var(--text-color);
             cursor: pointer; /* 新增 */
             overflow: hidden; /* 新增 */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .day-card:hover {
@@ -326,6 +327,26 @@
             bottom: 0;
         }
 
+        /* 触摸涟漪效果 */
+        .day-card::before, .card::before, .achievement-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            padding-top: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s, opacity 0.6s;
+        }
+
+        .day-card:active::before, .card:active::before, .achievement-item:active::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(2);
+            transition: transform 0.2s, opacity 0.4s;
+        }
 
         /* 成就项目优化 */
         .achievement-item {
@@ -358,6 +379,11 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease;
+            overflow: hidden;
+        }
+
+        .modal.fade-out {
+            animation: fadeOut 0.3s ease forwards;
         }
 
         .modal-content {
@@ -371,6 +397,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .modal-header {
@@ -419,6 +447,93 @@
             border-radius: 8px;
         }
 
+        /* 加载提示样式 */
+        .word-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .word-loader-spin {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--bg-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .word-loader p {
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        /* 下载按钮样式 */
+        .download-btn {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 新增的淡出动画 */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* 添加全屏按钮和控制按钮 */
+        .modal-controls {
+            position: absolute;
+            top: 0.5rem;
+            right: 5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .modal-control-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .modal-control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -445,11 +560,17 @@
                 width: 95%;
                 height: 85vh;
                 margin: 15% auto;
-                max-height: 85vh;
+                /*max-height: 85vh;*/
+            }
+
+            .download-btn {
+                right: 50px;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
             }
 
             .modal-header {
-                padding: 0.9rem;
+                padding: 0.75rem 1rem;
             }
 
             .modal-header h3 {
@@ -519,10 +640,11 @@
             opacity: 0.7;
         }
 
-        /* 响应式设计 */
+        /* 移动端样式优化 */
         @media (max-width: 768px) {
+            /* 改进导航 */
             nav .container {
-                padding: 1rem;
+                padding: 0.75rem 1rem;
             }
 
             nav ul {
@@ -531,31 +653,91 @@
                 left: -100%;
                 width: 100%;
                 height: calc(100vh - 60px);
-                background-color: var(--primary-color);
+                background-color: rgba(196, 30, 58, 0.95);
+                backdrop-filter: blur(10px);
                 flex-direction: column;
                 padding: 2rem;
-                gap: 1rem;
+                gap: 2rem;
                 transition: left 0.3s ease;
+                z-index: 999;
             }
 
             nav ul.active {
                 left: 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
 
-            .menu-toggle {
+            nav ul li a {
+                font-size: 1.2rem;
+                padding: 0.5rem 0;
                 display: block;
-            }
-
-            .hero {
-                padding: 2rem 1rem 1rem;
-            }
-
-            .section {
-                padding: 2rem 1.5rem;
+                width: 100%;
             }
 
             .grid {
                 gap: 1rem;
+            }
+
+            /* 调整页面间距 */
+            .section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero {
+                padding-top: 5rem;
+            }
+
+            /* 日程卡片在移动端的优化 */
+            .day-card {
+                padding: 1.5rem;
+            }
+
+            /* 返回顶部按钮位置调整 */
+            .back-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* 针对更小屏幕的优化 */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                gap: 0.75rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        /* 添加触摸反馈效果 */
+        @media (hover: none) {
+            .card:active, .day-card:active, .achievement-item:active {
+                transform: scale(0.98);
+                transition: transform 0.1s;
+            }
+
+            nav a::after {
+                display: none;
+            }
+
+            nav a:active {
+                opacity: 0.7;
             }
         }
 
@@ -684,7 +866,8 @@
         <!-- 项目概述 -->
         <section id="about" class="section fade-in">
             <h2>项目概述</h2>
-            <p>为传承红色基因、厚植家国情怀，结合纪念抗日战争胜利80周年主题，本项目以长沙红色资源为依托，深入开展为期五天的暑期社会实践，在行走中感悟革命精神，在服务中践行北京林业大学青年的时代担当。</p>
+            <p>
+                为传承红色基因、厚植家国情怀，结合纪念抗日战争胜利80周年主题，本项目以长沙红色资源为依托，深入开展为期五天的暑期社会实践，在行走中感悟革命精神，在服务中践行北京林业大学青年的时代担当。</p>
 
             <div class="quote">
                 "问苍茫大地，谁主沉浮" —— 让我们追寻革命先辈的足迹，在新时代书写青春答卷
@@ -791,7 +974,7 @@
             <div class="grid grid-2">
                 <div class="day-card"
                      style="--bg-img: url('https://img.vaporr4s.eu.org/halo/2025/06/1a586506b56d62e11ffdd935a6dca807.jpgg');">
-                    <h4>第一天：对话青年先辈</h4>
+                    <h4>第一天：青春对话先辈</h4>
                     <p class="location">橘子洲头</p>
                     <p>
                         瞻仰毛泽东青年艺术雕塑，回溯革命先辈"问苍茫大地，谁主沉浮"的磅礴胸怀。开展"青春对话先辈"主题分享会，探讨新时代青年如何接续奋斗。</p>
@@ -900,6 +1083,12 @@
     menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         menuToggle.innerHTML = navMenu.classList.contains('active') ? '<span>✕</span>' : '<span>☰</span>';
+        // 添加: 当菜单打开时禁止背景滚动
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     });
 
     // 点击导航链接后关闭移动端菜单
@@ -1016,33 +1205,91 @@
         });
     });
 
-    // 打开弹窗函数 - 修改为适应外部URL
+    // 改进的弹窗加载行为
     function openWordModal(filePath, title) {
         const modal = document.getElementById('wordModal');
         const modalTitle = document.getElementById('modalTitle');
-        const wordFrame = document.getElementById('wordFrame');
+        const modalBody = document.querySelector('.modal-body');
 
+        // 显示模态窗口
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
         modalTitle.textContent = title;
 
-        // 由于是外部URL，直接使用完整路径
+        // 添加加载提示
+        modalBody.innerHTML = `
+        <div class="word-loader">
+            <div class="word-loader-spin"></div>
+            <p>正在加载文档，请稍候...</p>
+        </div>
+        <iframe id="wordFrame" src="" frameborder="0" style="display:none;"></iframe>
+    `;
+
+        // 重新获取iframe元素
+        const updatedWordFrame = document.getElementById('wordFrame');
+
         // 使用Microsoft Office Online
         const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(filePath)}`;
 
-        // 备选方案：使用Google Docs Viewer
-        // const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(filePath)}&embedded=true`;
+        // 设置超时处理
+        const loadTimeout = setTimeout(() => {
+            document.querySelector('.word-loader p').textContent = '文档加载较慢，请耐心等待或尝试下载查看...';
 
-        wordFrame.src = viewerUrl;
-        modal.style.display = 'block';
+            // 添加下载按钮到加载提示内
+            const downloadLink = document.createElement('a');
+            downloadLink.href = filePath;
+            downloadLink.className = 'download-fallback';
+            downloadLink.setAttribute('download', '');
+            downloadLink.innerHTML = '直接下载文档';
+            downloadLink.target = '_blank';
+            downloadLink.style.display = 'block';
+            downloadLink.style.marginTop = '1rem';
+            downloadLink.style.color = 'var(--primary-color)';
+            document.querySelector('.word-loader').appendChild(downloadLink);
+        }, 5000);
+
+        // 监听iframe加载完成事件
+        updatedWordFrame.onload = function () {
+            clearTimeout(loadTimeout);
+            document.querySelector('.word-loader').style.display = 'none';
+            updatedWordFrame.style.display = 'block';
+
+            // 添加下载按钮
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = filePath;
+            downloadBtn.className = 'download-btn';
+            downloadBtn.setAttribute('download', '');
+            downloadBtn.innerHTML = '下载文档 <span>↓</span>';
+            downloadBtn.target = '_blank';
+            modal.querySelector('.modal-header').appendChild(downloadBtn);
+        };
+
+        // 设置iframe源
+        updatedWordFrame.src = viewerUrl;
     }
 
-
-    // 关闭弹窗函数
+    // 改进关闭模态窗口函数
     function closeModal() {
         const modal = document.getElementById('wordModal');
-        const wordFrame = document.getElementById('wordFrame');
 
-        modal.style.display = 'none';
-        wordFrame.src = ''; // 清空iframe
+        // 恢复背景滚动
+        document.body.style.overflow = '';
+
+        // 添加淡出动画
+        modal.classList.add('fade-out');
+
+        // 动画结束后清理
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('fade-out');
+
+            // 重置模态内容
+            document.querySelector('.modal-body').innerHTML = '<iframe id="wordFrame" src="" frameborder="0"></iframe>';
+
+            // 移除可能添加的下载按钮
+            const downloadBtn = modal.querySelector('.download-btn');
+            if (downloadBtn) downloadBtn.remove();
+        }, 300);
     }
 
     // 点击弹窗外部关闭
@@ -1059,12 +1306,134 @@
             closeModal();
         }
     });
+
+    // 添加全屏功能
+    document.addEventListener('DOMContentLoaded', function () {
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        fullscreenBtn.addEventListener('click', function () {
+            const modalContent = document.querySelector('.modal-content');
+
+            if (modalContent.classList.contains('fullscreen')) {
+                // 退出全屏
+                modalContent.classList.remove('fullscreen');
+                fullscreenBtn.innerHTML = '<span>⛶</span>';
+                fullscreenBtn.title = '全屏查看';
+            } else {
+                // 进入全屏
+                modalContent.classList.add('fullscreen');
+                fullscreenBtn.innerHTML = '<span>⛫</span>';
+                fullscreenBtn.title = '退出全屏';
+            }
+        });
+
+        // 添加全屏样式
+        const style = document.createElement('style');
+        style.textContent = `
+        .modal-content.fullscreen {
+            width: 98%;
+            height: 95vh;
+            margin: 1vh auto;
+            max-width: none;
+        }
+    `;
+        document.head.appendChild(style);
+    });
+
+    // 延迟加载非关键资源
+    document.addEventListener('DOMContentLoaded', function () {
+        // 延迟加载图片的函数
+        function lazyLoadImages() {
+            // 如果支持 IntersectionObserver，使用它来优化图片加载
+            if ('IntersectionObserver' in window) {
+                const imgObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const card = entry.target;
+                            // 从 style 的 --bg-img 中提取 URL
+                            const bgImageStyle = card.style.getPropertyValue('--bg-img');
+                            if (bgImageStyle) {
+                                // 预加载图片
+                                const img = new Image();
+                                img.onload = () => {
+                                    // 图片加载完成后，添加过渡效果
+                                    card.style.transition = 'background 0.5s ease';
+                                };
+                                img.src = bgImageStyle.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+                            }
+                            imgObserver.unobserve(card);
+                        }
+                    });
+                }, {rootMargin: '100px'});
+
+                // 观察所有日程卡片
+                document.querySelectorAll('.day-card').forEach(card => {
+                    imgObserver.observe(card);
+                });
+            }
+        }
+
+        // 调用延迟加载图片
+        lazyLoadImages();
+    });
+
+    // 改进移动设备上的日程卡片行为
+    document.addEventListener('DOMContentLoaded', function () {
+        const dayCards = document.querySelectorAll('.day-card');
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+        dayCards.forEach((card, index) => {
+            // 根据移动设备添加不同的交互方式
+            if (isMobile) {
+                // 在移动设备上改变交互逻辑
+                card.addEventListener('click', function (e) {
+                    const day = this.getAttribute('data-day');
+                    const title = this.querySelector('h4').textContent;
+
+                    // 显示加载指示器
+                    const loadingIndicator = document.createElement('div');
+                    loadingIndicator.className = 'card-loading';
+                    loadingIndicator.innerHTML = '加载中...';
+                    loadingIndicator.style.position = 'absolute';
+                    loadingIndicator.style.top = '0';
+                    loadingIndicator.style.left = '0';
+                    loadingIndicator.style.width = '100%';
+                    loadingIndicator.style.height = '100%';
+                    loadingIndicator.style.display = 'flex';
+                    loadingIndicator.style.alignItems = 'center';
+                    loadingIndicator.style.justifyContent = 'center';
+                    loadingIndicator.style.backgroundColor = 'rgba(255,255,255,0.7)';
+                    loadingIndicator.style.zIndex = '10';
+
+                    this.appendChild(loadingIndicator);
+
+                    // 短暂延迟以显示加载效果
+                    setTimeout(() => {
+                        this.removeChild(loadingIndicator);
+                        openWordModal(scheduleFiles[day], title);
+                    }, 300);
+                });
+            } else {
+                // 桌面设备保持原有行为
+                card.addEventListener('click', function () {
+                    const day = this.getAttribute('data-day');
+                    const title = this.querySelector('h4').textContent;
+                    openWordModal(scheduleFiles[day], title);
+                });
+            }
+        });
+    });
 </script>
-<!-- Word文件弹窗 -->
+<!-- 改进的Word文件弹窗 -->
 <div class="modal" id="wordModal">
     <div class="modal-content">
         <div class="modal-header">
             <h3 id="modalTitle">行程详情</h3>
+            <div class="modal-controls">
+                <button class="modal-control-btn" id="fullscreenBtn" title="全屏查看">
+                    <span>⛶</span>
+                </button>
+            </div>
             <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         <div class="modal-body">
