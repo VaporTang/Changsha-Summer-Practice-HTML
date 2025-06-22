@@ -125,14 +125,17 @@
             width: 100%;
         }
 
-        /* 移动端菜单按钮 */
+        /* 修改移动端菜单按钮样式 */
         .menu-toggle {
-            display: none;
+            display: none; /* 默认隐藏 */
             background: none;
             border: none;
             color: var(--white);
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            width: 40px;
+            height: 40px;
         }
 
         /* 英雄区域优化 */
@@ -660,18 +663,33 @@
                 gap: 2rem;
                 transition: left 0.3s ease;
                 z-index: 999;
+                display: none;
             }
 
-            nav ul.active {
-                left: 0;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
+            /* 移动端菜单显示时的样式 */
+            @media (max-width: 768px) {
+                nav ul.active {
+                    display: flex;
+                    position: fixed;
+                    top: 60px;
+                    left: 0;
+                    width: 100%;
+                    height: calc(100vh - 60px);
+                    background-color: rgba(196, 30, 58, 0.95);
+                    backdrop-filter: blur(10px);
+                    flex-direction: column;
+                    padding: 2rem;
+                    gap: 2rem;
+                    z-index: 999;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                }
 
-            nav ul li a {
-                font-size: 1.2rem;
-                padding: 0.5rem 0;
-                display: block;
-                width: 100%;
+                nav ul.active li a {
+                    font-size: 1.2rem;
+                    padding: 0.5rem 0;
+                    display: block;
+                    width: 100%;
+                }
             }
 
             .grid {
@@ -699,6 +717,12 @@
                 right: 1.5rem;
                 width: 45px;
                 height: 45px;
+            }
+
+            .menu-toggle {
+                display: flex; /* 改为显示 */
+                align-items: center;
+                justify-content: center;
             }
         }
 
@@ -1382,6 +1406,31 @@
 
         // 调用延迟加载图片
         lazyLoadImages();
+    });
+
+    // 移动端菜单切换处理
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.innerHTML = navMenu.classList.contains('active') ? '<span>✕</span>' : '<span>☰</span>';
+
+                // 当菜单打开时禁止背景滚动
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // 点击链接后关闭菜单
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<span>☰</span>';
+                    document.body.style.overflow = '';
+                });
+            });
+        }
     });
 </script>
 <!-- 改进的Word文件弹窗 -->
