@@ -685,7 +685,7 @@
             }
 
             .hero {
-                padding-top: 5rem;
+                padding: 2rem 1rem 1rem;
             }
 
             /* 日程卡片在移动端的优化 */
@@ -1180,9 +1180,9 @@
 
     window.addEventListener('scroll', updateScrollProgress);
 
-    // 为每个行程卡片添加data属性和点击事件
+    // 修复移动端日程卡片点击问题
     document.addEventListener('DOMContentLoaded', function () {
-        // 定义每天对应的Word文件路径 - 使用您提供的URL格式
+        // 定义每天对应的Word文件路径
         const scheduleFiles = {
             'day1': 'https://img.vaporr4s.eu.org/halo/2025/06/f97f08186e7967f20b3aefaefc9abcdd.docx',
             'day2': 'https://img.vaporr4s.eu.org/halo/2025/06/e7d43addf879dd7a8e852f26c619d68c.docx',
@@ -1197,10 +1197,17 @@
             card.style.cursor = 'pointer';
             card.setAttribute('data-day', `day${index + 1}`);
 
+            // 统一处理点击事件，不区分移动端和桌面端
             card.addEventListener('click', function () {
                 const day = this.getAttribute('data-day');
                 const title = this.querySelector('h4').textContent;
-                openWordModal(scheduleFiles[day], title);
+
+                // 短暂的视觉反馈
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    openWordModal(scheduleFiles[day], title);
+                }, 150);
             });
         });
     });
@@ -1375,53 +1382,6 @@
 
         // 调用延迟加载图片
         lazyLoadImages();
-    });
-
-    // 改进移动设备上的日程卡片行为
-    document.addEventListener('DOMContentLoaded', function () {
-        const dayCards = document.querySelectorAll('.day-card');
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-        dayCards.forEach((card, index) => {
-            // 根据移动设备添加不同的交互方式
-            if (isMobile) {
-                // 在移动设备上改变交互逻辑
-                card.addEventListener('click', function (e) {
-                    const day = this.getAttribute('data-day');
-                    const title = this.querySelector('h4').textContent;
-
-                    // 显示加载指示器
-                    const loadingIndicator = document.createElement('div');
-                    loadingIndicator.className = 'card-loading';
-                    loadingIndicator.innerHTML = '加载中...';
-                    loadingIndicator.style.position = 'absolute';
-                    loadingIndicator.style.top = '0';
-                    loadingIndicator.style.left = '0';
-                    loadingIndicator.style.width = '100%';
-                    loadingIndicator.style.height = '100%';
-                    loadingIndicator.style.display = 'flex';
-                    loadingIndicator.style.alignItems = 'center';
-                    loadingIndicator.style.justifyContent = 'center';
-                    loadingIndicator.style.backgroundColor = 'rgba(255,255,255,0.7)';
-                    loadingIndicator.style.zIndex = '10';
-
-                    this.appendChild(loadingIndicator);
-
-                    // 短暂延迟以显示加载效果
-                    setTimeout(() => {
-                        this.removeChild(loadingIndicator);
-                        openWordModal(scheduleFiles[day], title);
-                    }, 300);
-                });
-            } else {
-                // 桌面设备保持原有行为
-                card.addEventListener('click', function () {
-                    const day = this.getAttribute('data-day');
-                    const title = this.querySelector('h4').textContent;
-                    openWordModal(scheduleFiles[day], title);
-                });
-            }
-        });
     });
 </script>
 <!-- 改进的Word文件弹窗 -->
