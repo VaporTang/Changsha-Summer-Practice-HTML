@@ -2,14 +2,13 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description"
           content="北京林业大学湘当红小队 - 2025年青春向党红色教育专项实践团队，重走长沙红色足迹，赓续湖湘革命精神">
     <meta name="keywords" content="北京林业大学,社会实践,红色教育,长沙,湘当红小队">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>湘当红小队 - 北京林业大学社会实践团队</title>
-
-    <!-- 预加载字体 -->
-    <!--<link rel="preconnect" href="https://fonts.googleapis.com">-->
 
     <style>
         /* CSS 变量定义 */
@@ -44,6 +43,7 @@
             color: var(--text-color);
             background-color: var(--bg-color);
             overflow-x: hidden;
+            font-size: 16px; /* 避免 iOS 缩放 */
         }
 
         /* 工具类 */
@@ -227,6 +227,9 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            min-height: 44px; /* 触摸目标大小 */
+            transform: translateZ(0); /* 硬件加速 */
+            will-change: transform;
         }
 
         .card::before {
@@ -246,7 +249,7 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) translateZ(0);
             box-shadow: var(--shadow-lg);
         }
 
@@ -272,12 +275,17 @@
             transition: var(--transition);
             position: relative;
             color: var(--text-color);
-            cursor: pointer; /* 新增 */
-            overflow: hidden; /* 新增 */
+            cursor: pointer;
+            overflow: hidden;
+            min-height: 44px; /* 触摸目标大小 */
+            transform: translateZ(0); /* 硬件加速 */
+            will-change: transform;
+            -webkit-tap-highlight-color: rgba(196, 30, 58, 0.3);
+            tap-highlight-color: rgba(196, 30, 58, 0.3);
         }
 
         .day-card:hover {
-            transform: scale(1.02);
+            transform: scale(1.02) translateZ(0);
             box-shadow: var(--shadow-lg);
             background-blend-mode: multiply;
         }
@@ -326,7 +334,6 @@
             bottom: 0;
         }
 
-
         /* 成就项目优化 */
         .achievement-item {
             background: var(--primary-light);
@@ -335,11 +342,14 @@
             text-align: center;
             border: 2px solid transparent;
             transition: var(--transition);
+            min-height: 44px; /* 触摸目标大小 */
+            transform: translateZ(0); /* 硬件加速 */
+            will-change: transform;
         }
 
         .achievement-item:hover {
             border-color: var(--primary-color);
-            transform: translateY(-5px);
+            transform: translateY(-5px) translateZ(0);
         }
 
         .achievement-item .icon {
@@ -419,45 +429,6 @@
             border-radius: 8px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* 响应式弹窗 */
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                height: 85vh;
-                margin: 15% auto;
-                max-height: 85vh;
-            }
-
-            .modal-header {
-                padding: 0.9rem;
-            }
-
-            .modal-header h3 {
-                font-size: 1.1rem;
-            }
-        }
-
-
         /* 引用样式优化 */
         .quote {
             background: var(--primary-light);
@@ -519,44 +490,36 @@
             opacity: 0.7;
         }
 
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            nav .container {
-                padding: 1rem;
-            }
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
 
-            nav ul {
-                position: fixed;
-                top: 60px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px);
-                background-color: var(--primary-color);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1rem;
-                transition: left 0.3s ease;
-            }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
-            nav ul.active {
-                left: 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero {
-                padding: 2rem 1rem 1rem;
-            }
-
-            .section {
-                padding: 2rem 1.5rem;
-            }
-
-            .grid {
-                gap: 1rem;
-            }
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
         }
 
         /* 动画定义 */
@@ -568,6 +531,32 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
 
@@ -611,41 +600,222 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
+        /* 性能优化 - 减少动画影响 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
 
-        /* 返回顶部按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            box-shadow: var(--shadow-md);
+        /* 响应式设计 - 超小屏幕 */
+        @media (max-width: 479px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 2rem 15px 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem 1rem;
+                margin-bottom: 2rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .section h2 {
+                font-size: 1.3rem;
+                line-height: 1.3;
+            }
+
+            .section h3 {
+                font-size: 1.1rem;
+            }
+
+            .grid {
+                gap: 1rem;
+            }
+
+            .grid-4, .grid-3, .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .card h4 {
+                font-size: 1rem;
+            }
+
+            .card p {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .day-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .day-card p {
+                text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 0.5rem;
+                border-radius: 4px;
+                margin-top: 0.5rem;
+            }
+
+            .achievement-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .achievement-item .icon {
+                font-size: 2.5rem;
+            }
+
+            .back-to-top {
+                width: 48px;
+                height: 48px;
+                bottom: 1rem;
+                right: 1rem;
+            }
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+        /* 响应式设计 - 小屏幕 */
+        @media (min-width: 480px) and (max-width: 767px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
         }
 
-        .back-to-top:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-5px);
+        /* 响应式设计 - 中等屏幕 */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .grid-4 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 响应式设计 - 平板和手机 */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            nav .container {
+                padding: 1rem;
+                position: relative;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(196, 30, 58, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                padding: 2rem;
+                gap: 2rem;
+                transition: left 0.3s ease;
+                z-index: 1001;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li a {
+                font-size: 1.2rem;
+                padding: 1rem 0;
+                display: block;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .menu-toggle {
+                display: block;
+                z-index: 1002;
+                position: relative;
+            }
+
+            .menu-toggle span {
+                transition: all 0.3s ease;
+            }
+
+            .hero {
+                padding: 2rem 1rem 1rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .grid {
+                gap: 1rem;
+            }
+
+            .card:hover, .day-card:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            /* 弹窗移动端优化 */
+            .modal-content {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .modal-header {
+                padding: 1rem;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+
+            .modal-header h3 {
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+
+            .modal-close {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+            }
+
+            .modal-body {
+                height: calc(100vh - 60px);
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -869,7 +1039,46 @@
     <span>↑</span>
 </button>
 
+<!-- Word文件弹窗 -->
+<div class="modal" id="wordModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">行程详情</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <iframe id="wordFrame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
 <script>
+    // 触摸事件优化
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', function(e) {
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e) {
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartY - touchEndY;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // 向上滑动逻辑
+            } else {
+                // 向下滑动逻辑
+            }
+        }
+    }
+
     // 页面加载完成后隐藏加载动画
     window.addEventListener('load', () => {
         setTimeout(() => {
@@ -877,11 +1086,12 @@
         }, 500);
     });
 
-    // 导航栏滚动效果
+    // 导航栏滚动效果 - 性能优化版
     const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
+    let lastScrollTime = 0;
+    const scrollThrottle = 16; // 约60fps
 
-    window.addEventListener('scroll', () => {
+    function updateNavbar() {
         const currentScroll = window.pageYOffset;
 
         if (currentScroll > 100) {
@@ -889,9 +1099,16 @@
         } else {
             navbar.classList.remove('scrolled');
         }
+    }
 
-        lastScroll = currentScroll;
-    });
+    window.addEventListener('scroll', function() {
+        const now = Date.now();
+        if (now - lastScrollTime >= scrollThrottle) {
+            updateNavbar();
+            updateBackToTop();
+            lastScrollTime = now;
+        }
+    }, { passive: true });
 
     // 移动端菜单切换
     const menuToggle = document.getElementById('menuToggle');
@@ -945,16 +1162,16 @@
         observer.observe(el);
     });
 
-    // 返回顶部按钮
+    // 返回顶部按钮 - 性能优化版
     const backToTop = document.getElementById('backToTop');
 
-    window.addEventListener('scroll', () => {
+    function updateBackToTop() {
         if (window.pageYOffset > 300) {
             backToTop.classList.add('visible');
         } else {
             backToTop.classList.remove('visible');
         }
-    });
+    }
 
     backToTop.addEventListener('click', () => {
         window.scrollTo({
@@ -963,37 +1180,9 @@
         });
     });
 
-    // 防抖函数
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // 优化滚动性能
-    let ticking = false;
-
-    function updateScrollProgress() {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                // 滚动相关的更新操作
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-
-    window.addEventListener('scroll', updateScrollProgress);
-
     // 为每个行程卡片添加data属性和点击事件
     document.addEventListener('DOMContentLoaded', function () {
-        // 定义每天对应的Word文件路径 - 使用您提供的URL格式
+        // 定义每天对应的Word文件路径
         const scheduleFiles = {
             'day1': 'https://img.vaporr4s.eu.org/halo/2025/06/f97f08186e7967f20b3aefaefc9abcdd.docx',
             'day2': 'https://img.vaporr4s.eu.org/halo/2025/06/e7d43addf879dd7a8e852f26c619d68c.docx',
@@ -1016,7 +1205,7 @@
         });
     });
 
-    // 打开弹窗函数 - 修改为适应外部URL
+    // 打开弹窗函数
     function openWordModal(filePath, title) {
         const modal = document.getElementById('wordModal');
         const modalTitle = document.getElementById('modalTitle');
@@ -1024,17 +1213,15 @@
 
         modalTitle.textContent = title;
 
-        // 由于是外部URL，直接使用完整路径
         // 使用Microsoft Office Online
         const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(filePath)}`;
 
-        // 备选方案：使用Google Docs Viewer
-        // const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(filePath)}&embedded=true`;
-
         wordFrame.src = viewerUrl;
         modal.style.display = 'block';
-    }
 
+        // 防止背景滚动
+        document.body.style.overflow = 'hidden';
+    }
 
     // 关闭弹窗函数
     function closeModal() {
@@ -1043,6 +1230,9 @@
 
         modal.style.display = 'none';
         wordFrame.src = ''; // 清空iframe
+
+        // 恢复背景滚动
+        document.body.style.overflow = 'auto';
     }
 
     // 点击弹窗外部关闭
@@ -1059,18 +1249,14 @@
             closeModal();
         }
     });
+
+    // 防止iOS Safari的bounce效果
+    document.addEventListener('touchmove', function(e) {
+        if (document.body.style.overflow === 'hidden') {
+            e.preventDefault();
+        }
+    }, { passive: false });
 </script>
-<!-- Word文件弹窗 -->
-<div class="modal" id="wordModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle">行程详情</h3>
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <iframe id="wordFrame" src="" frameborder="0"></iframe>
-        </div>
-    </div>
-</div>
+
 </body>
 </html>
