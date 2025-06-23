@@ -135,7 +135,7 @@
             width: 100%;
         }
 
-        /* 状态指示器 */
+        /* 状态指示器 - 仅在桌面端显示 */
         .nav-indicator {
             position: absolute;
             top: 50%;
@@ -155,7 +155,7 @@
             right: 5px;
         }
 
-        /* 改进后的移动端菜单按钮 */
+        /* 移动端菜单按钮 - 默认隐藏 */
         .menu-toggle {
             display: none;
             background: rgba(255, 255, 255, 0.1);
@@ -171,7 +171,6 @@
             overflow: hidden;
             min-width: 48px;
             min-height: 48px;
-            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -694,7 +693,7 @@
                 min-width: 48px;
                 min-height: 48px;
             }
-            
+
             nav ul li a {
                 min-height: 48px;
                 display: flex;
@@ -793,6 +792,11 @@
                 bottom: 1rem;
                 right: 1rem;
             }
+
+            /* 移动端隐藏状态指示器 */
+            .nav-indicator {
+                display: none;
+            }
         }
 
         /* 响应式设计 - 小屏幕 */
@@ -812,6 +816,11 @@
 
             .section h2 {
                 font-size: 1.5rem;
+            }
+
+            /* 小屏幕也隐藏状态指示器 */
+            .nav-indicator {
+                display: none;
             }
         }
 
@@ -891,6 +900,7 @@
             nav ul.active li:nth-child(3) { animation-delay: 0.3s; }
             nav ul.active li:nth-child(4) { animation-delay: 0.4s; }
 
+            /* 只在移动端显示菜单按钮 */
             .menu-toggle {
                 display: flex !important;
                 z-index: 1002;
@@ -947,6 +957,13 @@
             .modal-body {
                 height: calc(100vh - 60px);
                 padding: 0;
+            }
+        }
+
+        /* 桌面端确保菜单按钮隐藏 */
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none !important;
             }
         }
     </style>
@@ -1194,7 +1211,7 @@
 
     document.addEventListener('touchstart', function(e) {
         touchStartY = e.changedTouches[0].screenY;
-        
+
         // 边缘滑动检测
         if (e.touches[0].clientX < 50) {
             touchStartX = e.touches[0].clientX;
@@ -1206,21 +1223,21 @@
         // 边缘滑动打开菜单
         if (!isDragging) return;
         currentX = e.touches[0].clientX;
-        
+
         if (currentX - touchStartX > 100) {
             const navMenu = document.getElementById('navMenu');
             const menuToggle = document.getElementById('menuToggle');
-            
+
             navMenu.classList.add('active');
             menuToggle.classList.add('active');
             menuToggle.innerHTML = '<span>✕</span>';
             document.body.style.overflow = 'hidden';
-            
+
             // 添加触觉反馈（如果支持）
             if ('vibrate' in navigator) {
                 navigator.vibrate(50);
             }
-            
+
             isDragging = false;
         }
     }, { passive: true });
@@ -1281,10 +1298,10 @@
 
     menuToggle.addEventListener('click', () => {
         const isActive = navMenu.classList.contains('active');
-        
+
         navMenu.classList.toggle('active');
         menuToggle.classList.toggle('active');
-        
+
         // 更新按钮图标和文字
         if (isActive) {
             menuToggle.innerHTML = '<span>☰</span>';
@@ -1293,7 +1310,7 @@
             menuToggle.innerHTML = '<span>✕</span>';
             document.body.style.overflow = 'hidden';
         }
-        
+
         // 添加触觉反馈（如果支持）
         if ('vibrate' in navigator) {
             navigator.vibrate(50);
