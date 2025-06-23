@@ -820,12 +820,65 @@
             background-repeat: no-repeat;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border: 2px solid rgba(196, 30, 58, 0.2);
+            /* 懒加载相关样式 */
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
         }
 
+        /* 修复：背面初始状态需要翻转 */
         .postcard-back {
             transform: rotateY(180deg);
         }
 
+        .postcard-front.loading,
+        .postcard-back.loading {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            position: relative;
+        }
+
+        .postcard-front.loading::before,
+        .postcard-back.loading::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            margin: -15px 0 0 -15px;
+            border: 3px solid rgba(196, 30, 58, 0.3);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .postcard-front.loading::after,
+        .postcard-back.loading::after {
+            content: '加载中...';
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .postcard-front.loaded,
+        .postcard-back.loaded {
+            opacity: 1;
+        }
+
+        .postcard-front:not(.loaded),
+        .postcard-back:not(.loaded) {
+            opacity: 0.7;
+        }
+
+        /* 新增：明信片内容覆盖层 */
         .postcard-overlay {
             position: absolute;
             bottom: 0;
@@ -833,58 +886,66 @@
             right: 0;
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
             color: white;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 0 0 12px 12px;
         }
 
-        .postcard-flip-hint {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(196, 30, 58, 0.9);
-            color: white;
-            padding: 0.3rem 0.6rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            animation: pulse 2s infinite;
+        .postcard-overlay h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .postcard-content-wrapper {
-            position: relative;
+        .postcard-overlay p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 新增：翻转提示 */
+        .postcard-flip-hint {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .postcard-container:hover .postcard-flip-hint {
+            opacity: 1;
         }
 
         /* 移动端优化 */
         @media (max-width: 768px) {
             .postcard-container {
-                height: 250px;
-            }
-
-            /* 移动端默认不悬停翻转，只能点击 */
-            .postcard-container:hover .postcard-flip {
-                transform: none;
+                height: 220px;
             }
 
             .postcard-flip-hint {
-                display: block;
-                animation: pulse 1.5s infinite;
+                display: none; /* 移动端隐藏提示 */
+            }
+
+            .postcard-overlay {
+                padding: 1rem;
+            }
+
+            .postcard-overlay h4 {
+                font-size: 1rem;
+            }
+
+            .postcard-overlay p {
+                font-size: 0.8rem;
             }
         }
 
-        /* 设计项目卡片优化 */
-        .design-item.postcard-item {
-            background: transparent;
-            padding: 0;
-            overflow: visible;
-        }
-
-        .design-item.postcard-item .design-item-content {
-            background: var(--white);
-            margin-top: 1rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* 动画定义 */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1564,19 +1625,19 @@
                             <div class="postcard-content-wrapper">
                                 <div class="postcard-container" onclick="flipPostcard(this)">
                                     <div class="postcard-flip">
-                                        <div class="postcard-front"
-                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/1a586506b56d62e11ffdd935a6dca807.jpg');">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
                                             <div class="postcard-flip-hint">点击翻转</div>
                                             <div class="postcard-overlay">
-                                                <h4 style="margin: 0; color: white;">橘子洲头怀古 - 正面</h4>
+                                                <h4>橘子洲头怀古</h4>
+                                                <p>恰同学少年，风华正茂</p>
                                             </div>
                                         </div>
-                                        <div class="postcard-back"
-                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/54bdeecdd2a5d2a70b2271664eb6c6b6.jpg');">
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
                                             <div class="postcard-overlay">
-                                                <h4 style="margin: 0; color: white;">明信片背面</h4>
-                                                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">
-                                                    包含地址栏和邮戳设计</p>
+                                                <h4>明信片背面</h4>
+                                                <p>包含地址栏和邮戳设计<br>纪念湘当红小队长沙之行</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1596,38 +1657,6 @@
                         </div>
 
                         <!-- 可以添加更多明信片 -->
-                        <div class="design-item postcard-item" data-design="postcard2">
-                            <div class="postcard-content-wrapper">
-                                <div class="postcard-container" onclick="flipPostcard(this)">
-                                    <div class="postcard-flip">
-                                        <div class="postcard-front"
-                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/postcard-front-2.jpg');">
-                                            <div class="postcard-flip-hint">点击翻转</div>
-                                            <div class="postcard-overlay">
-                                                <h4 style="margin: 0; color: white;">第一师范求学路 - 正面</h4>
-                                            </div>
-                                        </div>
-                                        <div class="postcard-back"
-                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/postcard-back-2.jpg');">
-                                            <div class="postcard-overlay">
-                                                <h4 style="margin: 0; color: white;">明信片背面</h4>
-                                                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">纪念版邮戳设计</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="design-item-content">
-                                <h4>第一师范求学路</h4>
-                                <p>重现革命先辈求学时光，展现知识改变命运的理想追求。双面设计突出历史厚重感。</p>
-                                <div class="design-tags">
-                                    <span class="design-tag">教育文化</span>
-                                    <span class="design-tag">历史建筑</span>
-                                    <span class="design-tag">求学精神</span>
-                                    <span class="design-tag">双面设计</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1748,10 +1777,55 @@
         }
     }
 
+    // 新增：明信片懒加载功能
+    function initPostcardLazyLoading() {
+        const postcardImages = document.querySelectorAll('.postcard-front[data-bg], .postcard-back[data-bg]');
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const bgUrl = element.getAttribute('data-bg');
+
+                    // 预加载图片
+                    const img = new Image();
+                    img.onload = function() {
+                        // 图片加载完成后应用背景
+                        element.style.backgroundImage = `url('${bgUrl}')`;
+                        element.classList.remove('loading');
+                        element.classList.add('loaded');
+                    };
+
+                    img.onerror = function() {
+                        // 图片加载失败时的处理
+                        element.classList.remove('loading');
+                        element.style.background = 'linear-gradient(135deg, #f5f5f5, #e0e0e0)';
+                        element.innerHTML += '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #999; text-align: center; font-size: 0.9rem;">图片加载失败</div>';
+                    };
+
+                    img.src = bgUrl;
+
+                    // 停止观察这个元素
+                    observer.unobserve(element);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // 提前50px开始加载
+            threshold: 0.1
+        });
+
+        // 开始观察所有明信片图片
+        postcardImages.forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
     // 页面加载完成后隐藏加载动画
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.getElementById('loader').classList.add('hidden');
+            // 初始化明信片懒加载
+            initPostcardLazyLoading();
         }, 500);
     });
 
@@ -1952,6 +2026,9 @@
         if ('vibrate' in navigator) {
             navigator.vibrate(30);
         }
+
+        // 防止事件冒泡
+        event.stopPropagation();
     }
 
     // 为明信片添加触摸事件优化
@@ -1974,6 +2051,26 @@
                     e.preventDefault();
                     flipPostcard(this);
                 }
+            });
+
+            // 移动端长按事件优化
+            let pressTimer = null;
+            
+            container.addEventListener('touchstart', function(e) {
+                pressTimer = setTimeout(() => {
+                    // 长按时显示提示
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate(50);
+                    }
+                }, 500);
+            });
+
+            container.addEventListener('touchend', function(e) {
+                clearTimeout(pressTimer);
+            });
+
+            container.addEventListener('touchmove', function(e) {
+                clearTimeout(pressTimer);
             });
         });
     });
