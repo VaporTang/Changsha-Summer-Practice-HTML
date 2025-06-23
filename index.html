@@ -790,7 +790,7 @@
         .postcard-container {
             perspective: 1000px;
             width: 100%;
-            height: 280px;
+            height: 400px; /* 调整基础高度 */
             cursor: pointer;
             position: relative;
         }
@@ -815,12 +815,9 @@
             height: 100%;
             backface-visibility: hidden;
             border-radius: 12px;
-            background-size: cover;
-            background-position: center;
             background-repeat: no-repeat;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
             border: 2px solid rgba(196, 30, 58, 0.2);
-            /* 懒加载相关样式 */
             transition: opacity 0.5s ease;
             display: flex;
             flex-direction: column;
@@ -828,11 +825,22 @@
             align-items: center;
             text-align: center;
             padding: 1rem;
+            background-color: #f8f8f8; /* 添加背景色 */
         }
 
-        /* 修复：背面初始状态需要翻转 */
+        /* 正面明信片样式 - 2245 × 1587 (约1.41:1) */
+        .postcard-front {
+            background-size: contain;
+            background-position: center;
+            aspect-ratio: 1.41; /* 2245/1587 ≈ 1.41 */
+        }
+
+        /* 反面明信片样式 - 1133 × 757 (约1.5:1) */
         .postcard-back {
             transform: rotateY(180deg);
+            background-size: contain;
+            background-position: center;
+            aspect-ratio: 1.5; /* 1133/757 ≈ 1.5 */
         }
 
         .postcard-front.loading,
@@ -926,7 +934,7 @@
         /* 移动端优化 */
         @media (max-width: 768px) {
             .postcard-container {
-                height: 220px;
+                height: 280px; /* 移动端调整高度 */
             }
 
             .postcard-flip-hint {
@@ -943,6 +951,55 @@
 
             .postcard-overlay p {
                 font-size: 0.8rem;
+            }
+
+            /* 移动端明信片比例调整 */
+            .postcard-front,
+            .postcard-back {
+                padding: 0.5rem;
+            }
+        }
+
+        /* 超小屏幕优化 */
+        @media (max-width: 479px) {
+            .postcard-container {
+                height: 200px; /* 更小的屏幕进一步调整 */
+            }
+
+            .postcard-overlay {
+                padding: 0.8rem;
+            }
+
+            .postcard-overlay h4 {
+                font-size: 0.9rem;
+            }
+
+            .postcard-overlay p {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* 桌面端确保菜单按钮隐藏 */
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none !important;
+            }
+
+            /* 桌面端明信片容器高度优化 */
+            .postcard-container {
+                height: 450px; /* 桌面端更大的显示区域 */
+            }
+
+            /* 新增：桌面端设计图片高度调整 */
+            .design-item-image {
+                height: 450px;
+            }
+        }
+
+        /* 大屏幕优化 */
+        @media (min-width: 1200px) {
+            .postcard-container {
+                height: 500px; /* 大屏幕最佳显示高度 */
             }
         }
 
@@ -1390,6 +1447,11 @@
                 display: none !important;
             }
 
+            /* 桌面端明信片容器高度优化 */
+            .postcard-container {
+                height: 450px; /* 桌面端更大的显示区域 */
+            }
+
             /* 新增：桌面端设计图片高度调整 */
             .design-item-image {
                 height: 450px;
@@ -1629,15 +1691,15 @@
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
                                             <div class="postcard-flip-hint">点击翻转</div>
                                             <div class="postcard-overlay">
-                                                <h4>橘子洲头怀古</h4>
-                                                <p>恰同学少年，风华正茂</p>
+                                                <!--<h4>橘子洲头怀古</h4>
+                                                <p>恰同学少年，风华正茂</p>-->
                                             </div>
                                         </div>
                                         <div class="postcard-back loading"
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
                                             <div class="postcard-overlay">
-                                                <h4>明信片背面</h4>
-                                                <p>包含地址栏和邮戳设计<br>纪念湘当红小队长沙之行</p>
+                                                <!--<h4>明信片背面</h4>
+                                                <p>包含地址栏和邮戳设计<br>纪念湘当红小队长沙之行</p>-->
                                             </div>
                                         </div>
                                     </div>
@@ -1650,13 +1712,39 @@
                                 <div class="design-tags">
                                     <span class="design-tag">历史文化</span>
                                     <span class="design-tag">诗词文化</span>
-                                    <span class="design-tag">青年精神</span>
-                                    <span class="design-tag">双面设计</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard1">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <div class="postcard-flip-hint">点击翻转</div>
+                                            <div class="postcard-overlay">
+                                            </div>
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>橘子洲头怀古</h4>
+                                <p>
+                                    以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">历史文化</span>
+                                    <span class="design-tag">诗词文化</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1789,14 +1877,14 @@
 
                     // 预加载图片
                     const img = new Image();
-                    img.onload = function() {
+                    img.onload = function () {
                         // 图片加载完成后应用背景
                         element.style.backgroundImage = `url('${bgUrl}')`;
                         element.classList.remove('loading');
                         element.classList.add('loaded');
                     };
 
-                    img.onerror = function() {
+                    img.onerror = function () {
                         // 图片加载失败时的处理
                         element.classList.remove('loading');
                         element.style.background = 'linear-gradient(135deg, #f5f5f5, #e0e0e0)';
@@ -2038,6 +2126,7 @@
         postcardContainers.forEach(container => {
             // 阻止事件冒泡，避免触发父元素的点击事件
             container.addEventListener('click', function (e) {
+
                 e.stopPropagation();
             });
 
@@ -2055,8 +2144,8 @@
 
             // 移动端长按事件优化
             let pressTimer = null;
-            
-            container.addEventListener('touchstart', function(e) {
+
+            container.addEventListener('touchstart', function (e) {
                 pressTimer = setTimeout(() => {
                     // 长按时显示提示
                     if ('vibrate' in navigator) {
@@ -2065,11 +2154,11 @@
                 }, 500);
             });
 
-            container.addEventListener('touchend', function(e) {
+            container.addEventListener('touchend', function (e) {
                 clearTimeout(pressTimer);
             });
 
-            container.addEventListener('touchmove', function(e) {
+            container.addEventListener('touchmove', function (e) {
                 clearTimeout(pressTimer);
             });
         });
