@@ -97,8 +97,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
         }
 
         /* 导航栏优化 */
@@ -111,12 +115,6 @@
             box-shadow: 0 2px 20px rgba(196, 30, 58, 0.3);
             transition: var(--transition);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        nav.scrolled {
-            background: linear-gradient(135deg, rgba(196, 30, 58, 0.95), rgba(160, 23, 41, 0.95));
-            backdrop-filter: blur(15px);
-            box-shadow: 0 2px 25px rgba(196, 30, 58, 0.4);
         }
 
         nav .container {
@@ -323,9 +321,6 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
 
-        .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
 
         .grid-4 {
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -467,6 +462,161 @@
         .achievement-item .icon {
             font-size: 3rem;
             margin-bottom: 1rem;
+        }
+
+        /* 新增：设计展示样式 */
+        .design-gallery {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .design-category {
+            background: var(--bg-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .design-category:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .design-category-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .design-category-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .design-category-header .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .design-items {
+            padding: 2rem;
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .design-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .design-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .design-item-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .design-item-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(196, 30, 58, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .design-item:hover .design-item-image::before {
+            opacity: 1;
+        }
+
+        .design-item-content {
+            padding: 1.5rem;
+        }
+
+        .design-item h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .design-item p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .design-item .design-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .design-tag {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .design-modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+
+        .design-modal-details h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .design-modal-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .design-modal-details li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .design-modal-details li:last-child {
+            border-bottom: none;
+        }
+
+        .design-modal-details .detail-label {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .design-modal-details .detail-value {
+            color: var(--text-light);
         }
 
         /* 弹窗样式 */
@@ -846,6 +996,16 @@
             .nav-indicator {
                 display: none;
             }
+
+            /* 设计展示移动端优化 */
+            .design-items {
+                padding: 1rem;
+                grid-template-columns: 1fr;
+            }
+
+            .design-item-content {
+                padding: 1rem;
+            }
         }
 
         /* 响应式设计 - 小屏幕 */
@@ -871,12 +1031,20 @@
             .nav-indicator {
                 display: none;
             }
+
+            .design-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* 响应式设计 - 中等屏幕 */
         @media (min-width: 768px) and (max-width: 991px) {
             .grid-4 {
                 grid-template-columns: repeat(3, 1fr);
+            }
+
+            .design-items {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -944,10 +1112,25 @@
                 opacity: 0;
             }
 
-            nav ul.active li:nth-child(1) { animation-delay: 0.1s; }
-            nav ul.active li:nth-child(2) { animation-delay: 0.2s; }
-            nav ul.active li:nth-child(3) { animation-delay: 0.3s; }
-            nav ul.active li:nth-child(4) { animation-delay: 0.4s; }
+            nav ul.active li:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            nav ul.active li:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            nav ul.active li:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            nav ul.active li:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+            nav ul.active li:nth-child(5) {
+                animation-delay: 0.5s;
+            }
 
             /* 只在移动端显示菜单按钮 */
             .menu-toggle {
@@ -1034,6 +1217,7 @@
             <li><a href="#about">项目概述<span class="nav-indicator"></span></a></li>
             <li><a href="#team">团队成员<span class="nav-indicator"></span></a></li>
             <li><a href="#schedule">实践行程<span class="nav-indicator"></span></a></li>
+            <li><a href="#designs">原创设计<span class="nav-indicator"></span></a></li>
             <li><a href="#achievements">预期成果<span class="nav-indicator"></span></a></li>
         </ul>
     </div>
@@ -1052,7 +1236,8 @@
         <!-- 项目概述 -->
         <section id="about" class="section fade-in">
             <h2>项目概述</h2>
-            <p>为传承红色基因、厚植家国情怀，结合纪念抗日战争胜利80周年主题，本项目以长沙红色资源为依托，深入开展为期五天的暑期社会实践，在行走中感悟革命精神，在服务中践行北京林业大学青年的时代担当。</p>
+            <p>
+                为传承红色基因、厚植家国情怀，结合纪念抗日战争胜利80周年主题，本项目以长沙红色资源为依托，深入开展为期五天的暑期社会实践，在行走中感悟革命精神，在服务中践行北京林业大学青年的时代担当。</p>
 
             <div class="quote">
                 "问苍茫大地，谁主沉浮" —— 让我们追寻革命先辈的足迹，在新时代书写青春答卷
@@ -1193,9 +1378,109 @@
                 <div class="day-card"
                      style="--bg-img: url('https://img.vaporr4s.eu.org/halo/2025/06/2fe26ba3f308704f789bb6b5d2ace2d6.jpgg');">
                     <h4>第五天：解码湖湘党史</h4>
-                    <p class="location">长沙党史馆</p>
+                    <p class="location">长沙党史馆 新民学会旧址</p>
                     <p>
                         系统学习新民主主义革命时期湖湘党组织的诞生、抗争与发展。通过党史调研，挖掘湖南共产党人坚守初心的动人故事。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 我们的原创设计 -->
+        <section id="designs" class="section fade-in">
+            <h2>我们的原创设计</h2>
+            <p class="text-center mb-4">
+                融合红色文化与青年创意，展现新时代大学生的设计才华与文化自信。</p>
+
+            <div class="design-gallery">
+                <!-- 校旗设计 -->
+                <div class="design-category">
+                    <div class="design-category-header">
+                        <span class="icon">🚩</span>
+                        <h3>团队校旗设计</h3>
+                    </div>
+                    <div class="design-items">
+                        <div class="design-item" data-design="flag1">
+                            <div class="design-item-image"
+                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/2e8a582be65d09730d23f61d4c516786.png');">
+                            </div>
+                            <div class="design-item-content">
+                                <h4>校旗</h4>
+                                <p>
+                                    该校旗以深邃的北林绿为主要色调，象征着生机盎然的大自然与生态和谐，并通过左右排布实现视觉上的平衡。凸显了北京林业大学以森林生态为核心的学科特色与可持续发展的理念。</p>
+                                <!--<div class="design-tags">
+                                    <span class="design-tag">红色主题</span>
+                                    <span class="design-tag">地标元素</span>
+                                    <span class="design-tag">团队标识</span>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 明信片设计 -->
+                <div class="design-category">
+                    <div class="design-category-header">
+                        <span class="icon">📮</span>
+                        <h3>纪念明信片设计</h3>
+                    </div>
+                    <div class="design-items">
+                        <div class="design-item" data-design="postcard1">
+                            <div class="design-item-image"
+                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/example-postcard1.jpg');">
+                            </div>
+                            <div class="design-item-content">
+                                <h4>橘子洲头怀古</h4>
+                                <p>以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">历史文化</span>
+                                    <span class="design-tag">诗词文化</span>
+                                    <span class="design-tag">青年精神</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item" data-design="postcard2">
+                            <div class="design-item-image"
+                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/example-postcard2.jpg');">
+                            </div>
+                            <div class="design-item-content">
+                                <h4>岳麓山抗战记忆</h4>
+                                <p>展现抗战时期岳麓山的壮烈场景，铭记历史，传承抗战精神与民族气节。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">抗战主题</span>
+                                    <span class="design-tag">历史记忆</span>
+                                    <span class="design-tag">民族精神</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item" data-design="postcard3">
+                            <div class="design-item-image"
+                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/example-postcard3.jpg');">
+                            </div>
+                            <div class="design-item-content">
+                                <h4>湖南第一师范情怀</h4>
+                                <p>重现革命先辈求学时光，展现教育救国的理想与青年学子的求知热情。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">教育文化</span>
+                                    <span class="design-tag">求学精神</span>
+                                    <span class="design-tag">革命传统</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item" data-design="postcard4">
+                            <div class="design-item-image"
+                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/example-postcard4.jpg');">
+                            </div>
+                            <div class="design-item-content">
+                                <h4>长沙会战英雄谱</h4>
+                                <p>致敬抗日战争中的长沙保卫战英雄们，展现中华民族不屈不挠的战斗精神。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">英雄主题</span>
+                                    <span class="design-tag">战争历史</span>
+                                    <span class="design-tag">爱国情怀</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1263,7 +1548,7 @@
     let currentX = 0;
     let isDragging = false;
 
-    document.addEventListener('touchstart', function(e) {
+    document.addEventListener('touchstart', function (e) {
         touchStartY = e.changedTouches[0].screenY;
 
         // 边缘滑动检测
@@ -1271,9 +1556,9 @@
             touchStartX = e.touches[0].clientX;
             isDragging = true;
         }
-    }, { passive: true });
+    }, {passive: true});
 
-    document.addEventListener('touchmove', function(e) {
+    document.addEventListener('touchmove', function (e) {
         // 边缘滑动打开菜单
         if (!isDragging) return;
         currentX = e.touches[0].clientX;
@@ -1294,13 +1579,13 @@
 
             isDragging = false;
         }
-    }, { passive: true });
+    }, {passive: true});
 
-    document.addEventListener('touchend', function(e) {
+    document.addEventListener('touchend', function (e) {
         touchEndY = e.changedTouches[0].screenY;
         isDragging = false;
         handleSwipe();
-    }, { passive: true });
+    }, {passive: true});
 
     function handleSwipe() {
         const swipeThreshold = 50;
@@ -1337,14 +1622,14 @@
         }
     }
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const now = Date.now();
         if (now - lastScrollTime >= scrollThrottle) {
             updateNavbar();
             updateBackToTop();
             lastScrollTime = now;
         }
-    }, { passive: true });
+    }, {passive: true});
 
     // 增强菜单切换功能
     const menuToggle = document.getElementById('menuToggle');
@@ -1442,7 +1727,7 @@
             'day2': 'https://img.vaporr4s.eu.org/halo/2025/06/e7d43addf879dd7a8e852f26c619d68c.docx',
             'day3': 'https://img.vaporr4s.eu.org/halo/2025/06/cc0dc1f748ef3db52fc6c7d8b38fcfaf.docx',
             'day4': 'https://img.vaporr4s.eu.org/halo/2025/06/6dab271628da0f30d5afb17833c3c413.docx',
-            'day5': 'https://img.vaporr4s.eu.org/halo/2025/06/9e253e321b472c5eec6716af09e3a970.docx'
+            'day5': 'https://img.vaporr4s.eu.org/halo/2025/06/61b7494deee31f377a37560ae17d1c23.docx'
         };
 
         // 为每个day-card添加点击事件
@@ -1505,11 +1790,11 @@
     });
 
     // 防止iOS Safari的bounce效果
-    document.addEventListener('touchmove', function(e) {
+    document.addEventListener('touchmove', function (e) {
         if (document.body.style.overflow === 'hidden') {
             e.preventDefault();
         }
-    }, { passive: false });
+    }, {passive: false});
 </script>
 
 </body>
