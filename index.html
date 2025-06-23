@@ -67,18 +67,20 @@
 
         /* 导航栏优化 */
         nav {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 20px rgba(196, 30, 58, 0.3);
             transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         nav.scrolled {
-            background-color: rgba(196, 30, 58, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.95), rgba(160, 23, 41, 0.95));
+            backdrop-filter: blur(15px);
+            box-shadow: 0 2px 25px rgba(196, 30, 58, 0.4);
         }
 
         nav .container {
@@ -93,6 +95,14 @@
             font-weight: bold;
             color: var(--white);
             text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .nav-brand::before {
+            content: '🚩';
+            margin-right: 8px;
+            font-size: 1.2em;
         }
 
         nav ul {
@@ -125,14 +135,81 @@
             width: 100%;
         }
 
-        /* 移动端菜单按钮 */
+        /* 状态指示器 */
+        .nav-indicator {
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--white);
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover .nav-indicator,
+        nav ul li a.active .nav-indicator {
+            opacity: 1;
+            right: 5px;
+        }
+
+        /* 改进后的移动端菜单按钮 */
         .menu-toggle {
             display: none;
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             color: var(--white);
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            min-width: 48px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-toggle:hover::before {
+            left: 100%;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .menu-toggle span {
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .menu-toggle.active span {
+            transform: rotate(90deg);
         }
 
         /* 英雄区域优化 */
@@ -554,6 +631,17 @@
             }
         }
 
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -598,6 +686,21 @@
             border-top-color: var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+        }
+
+        /* 触摸优化 */
+        @media (pointer: coarse) {
+            .menu-toggle {
+                min-width: 48px;
+                min-height: 48px;
+            }
+            
+            nav ul li a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         /* 性能优化 - 减少动画影响 */
@@ -726,9 +829,13 @@
                 line-height: 1.5;
             }
 
+            /* 增强移动端导航 */
             nav .container {
                 padding: 1rem;
                 position: relative;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 0 0 15px 15px;
+                backdrop-filter: blur(10px);
             }
 
             nav ul {
@@ -737,14 +844,15 @@
                 left: -100%;
                 width: 100%;
                 height: 100vh;
-                background-color: rgba(196, 30, 58, 0.98);
-                backdrop-filter: blur(10px);
+                background: linear-gradient(135deg, rgba(196, 30, 58, 0.98), rgba(160, 23, 41, 0.98));
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 justify-content: center;
                 padding: 2rem;
                 gap: 2rem;
-                transition: left 0.3s ease;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1001;
+                box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1);
             }
 
             nav ul.active {
@@ -752,15 +860,39 @@
             }
 
             nav ul li a {
-                font-size: 1.2rem;
-                padding: 1rem 0;
+                font-size: 1.3rem;
+                padding: 1.5rem 0;
                 display: block;
                 text-align: center;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                position: relative;
+                transition: all 0.3s ease;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
+            nav ul li a:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(10px);
+                border-radius: 10px;
+            }
+
+            /* 菜单项入场动画 */
+            nav ul.active li {
+                animation: slideInFromRight 0.5s ease forwards;
+                opacity: 0;
+            }
+
+            nav ul.active li:nth-child(1) { animation-delay: 0.1s; }
+            nav ul.active li:nth-child(2) { animation-delay: 0.2s; }
+            nav ul.active li:nth-child(3) { animation-delay: 0.3s; }
+            nav ul.active li:nth-child(4) { animation-delay: 0.4s; }
+
             .menu-toggle {
-                display: block;
+                display: flex !important;
                 z-index: 1002;
                 position: relative;
             }
@@ -833,10 +965,10 @@
             <span>☰</span>
         </button>
         <ul id="navMenu">
-            <li><a href="#about">项目概述</a></li>
-            <li><a href="#team">团队成员</a></li>
-            <li><a href="#schedule">实践行程</a></li>
-            <li><a href="#achievements">预期成果</a></li>
+            <li><a href="#about">项目概述<span class="nav-indicator"></span></a></li>
+            <li><a href="#team">团队成员<span class="nav-indicator"></span></a></li>
+            <li><a href="#schedule">实践行程<span class="nav-indicator"></span></a></li>
+            <li><a href="#achievements">预期成果<span class="nav-indicator"></span></a></li>
         </ul>
     </div>
 </nav>
@@ -1056,13 +1188,46 @@
     // 触摸事件优化
     let touchStartY = 0;
     let touchEndY = 0;
+    let touchStartX = 0;
+    let currentX = 0;
+    let isDragging = false;
 
     document.addEventListener('touchstart', function(e) {
         touchStartY = e.changedTouches[0].screenY;
+        
+        // 边缘滑动检测
+        if (e.touches[0].clientX < 50) {
+            touchStartX = e.touches[0].clientX;
+            isDragging = true;
+        }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+        // 边缘滑动打开菜单
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+        
+        if (currentX - touchStartX > 100) {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.getElementById('menuToggle');
+            
+            navMenu.classList.add('active');
+            menuToggle.classList.add('active');
+            menuToggle.innerHTML = '<span>✕</span>';
+            document.body.style.overflow = 'hidden';
+            
+            // 添加触觉反馈（如果支持）
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            isDragging = false;
+        }
     }, { passive: true });
 
     document.addEventListener('touchend', function(e) {
         touchEndY = e.changedTouches[0].screenY;
+        isDragging = false;
         handleSwipe();
     }, { passive: true });
 
@@ -1110,20 +1275,38 @@
         }
     }, { passive: true });
 
-    // 移动端菜单切换
+    // 增强菜单切换功能
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
 
     menuToggle.addEventListener('click', () => {
+        const isActive = navMenu.classList.contains('active');
+        
         navMenu.classList.toggle('active');
-        menuToggle.innerHTML = navMenu.classList.contains('active') ? '<span>✕</span>' : '<span>☰</span>';
+        menuToggle.classList.toggle('active');
+        
+        // 更新按钮图标和文字
+        if (isActive) {
+            menuToggle.innerHTML = '<span>☰</span>';
+            document.body.style.overflow = 'auto';
+        } else {
+            menuToggle.innerHTML = '<span>✕</span>';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 添加触觉反馈（如果支持）
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50);
+        }
     });
 
     // 点击导航链接后关闭移动端菜单
     document.querySelectorAll('nav a').forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
             menuToggle.innerHTML = '<span>☰</span>';
+            document.body.style.overflow = 'auto';
         });
     });
 
