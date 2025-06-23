@@ -506,7 +506,7 @@
         }
 
         .design-items {
-            padding: 1rem;
+            padding: 1.5rem;
             gap: 1rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1229,6 +1229,11 @@
         @media (min-width: 769px) {
             .menu-toggle {
                 display: none !important;
+            }
+
+            /* 新增：桌面端设计图片高度调整 */
+            .design-item-image {
+                height: 450px;
             }
         }
     </style>
