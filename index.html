@@ -786,6 +786,104 @@
             transform: translateY(-5px);
         }
 
+        /* 新增：明信片翻转效果样式 */
+        .postcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 280px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .postcard-flip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .postcard-container:hover .postcard-flip,
+        .postcard-container.flipped .postcard-flip {
+            transform: rotateY(180deg);
+        }
+
+        .postcard-front,
+        .postcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(196, 30, 58, 0.2);
+        }
+
+        .postcard-back {
+            transform: rotateY(180deg);
+        }
+
+        .postcard-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 1rem;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .postcard-flip-hint {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(196, 30, 58, 0.9);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        .postcard-content-wrapper {
+            position: relative;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .postcard-container {
+                height: 250px;
+            }
+
+            /* 移动端默认不悬停翻转，只能点击 */
+            .postcard-container:hover .postcard-flip {
+                transform: none;
+            }
+
+            .postcard-flip-hint {
+                display: block;
+                animation: pulse 1.5s infinite;
+            }
+        }
+
+        /* 设计项目卡片优化 */
+        .design-item.postcard-item {
+            background: transparent;
+            padding: 0;
+            overflow: visible;
+        }
+
+        .design-item.postcard-item .design-item-content {
+            background: var(--white);
+            margin-top: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
         /* 动画定义 */
         @keyframes fadeInUp {
             from {
@@ -1462,50 +1560,104 @@
                         <h3>纪念明信片设计</h3>
                     </div>
                     <div class="design-items">
-                        <div class="design-item" data-design="postcard1">
-                            <div class="design-item-image"
-                                 style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/example-postcard1.jpg');">
+                        <div class="design-item postcard-item" data-design="postcard1">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front"
+                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/1a586506b56d62e11ffdd935a6dca807.jpg');">
+                                            <div class="postcard-flip-hint">点击翻转</div>
+                                            <div class="postcard-overlay">
+                                                <h4 style="margin: 0; color: white;">橘子洲头怀古 - 正面</h4>
+                                            </div>
+                                        </div>
+                                        <div class="postcard-back"
+                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/54bdeecdd2a5d2a70b2271664eb6c6b6.jpg');">
+                                            <div class="postcard-overlay">
+                                                <h4 style="margin: 0; color: white;">明信片背面</h4>
+                                                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">
+                                                    包含地址栏和邮戳设计</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="design-item-content">
                                 <h4>橘子洲头怀古</h4>
-                                <p>以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。</p>
+                                <p>
+                                    以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。正面展示主题图案，背面设计邮戳和地址栏。</p>
                                 <div class="design-tags">
                                     <span class="design-tag">历史文化</span>
                                     <span class="design-tag">诗词文化</span>
                                     <span class="design-tag">青年精神</span>
+                                    <span class="design-tag">双面设计</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 可以添加更多明信片 -->
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front"
+                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/postcard-front-2.jpg');">
+                                            <div class="postcard-flip-hint">点击翻转</div>
+                                            <div class="postcard-overlay">
+                                                <h4 style="margin: 0; color: white;">第一师范求学路 - 正面</h4>
+                                            </div>
+                                        </div>
+                                        <div class="postcard-back"
+                                             style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/postcard-back-2.jpg');">
+                                            <div class="postcard-overlay">
+                                                <h4 style="margin: 0; color: white;">明信片背面</h4>
+                                                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">纪念版邮戳设计</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>第一师范求学路</h4>
+                                <p>重现革命先辈求学时光，展现知识改变命运的理想追求。双面设计突出历史厚重感。</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">教育文化</span>
+                                    <span class="design-tag">历史建筑</span>
+                                    <span class="design-tag">求学精神</span>
+                                    <span class="design-tag">双面设计</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- 预期成果 -->
-        <section id="achievements" class="section fade-in">
-            <h2>预期目标与成果</h2>
+                <!-- 预期成果 -->
+                <section id="achievements" class="section fade-in">
+                    <h2>预期目标与成果</h2>
 
-            <div class="grid grid-4">
-                <div class="achievement-item">
-                    <div class="icon">🚩</div>
-                    <h4>深化红色基因传承</h4>
-                    <p>重走红色足迹，体悟建党初心与抗战精神</p>
-                </div>
-                <div class="achievement-item">
-                    <div class="icon">🛡️</div>
-                    <h4>创新国防教育实践</h4>
-                    <p>以"青言青语"普及国防知识，践行青年责任</p>
-                </div>
-                <div class="achievement-item">
-                    <div class="icon">📢</div>
-                    <h4>锻造青年宣讲能力</h4>
-                    <p>提炼党的理论青年化阐述方法，提升政治传播力</p>
-                </div>
-                <div class="achievement-item">
-                    <div class="icon">📚</div>
-                    <h4>凝练抗战80周年成果</h4>
-                    <p>记录英雄事迹，输出可推广的红色教育素材</p>
-                </div>
+                    <div class="grid grid-4">
+                        <div class="achievement-item">
+                            <div class="icon">🚩</div>
+                            <h4>深化红色基因传承</h4>
+                            <p>重走红色足迹，体悟建党初心与抗战精神</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="icon">🛡️</div>
+                            <h4>创新国防教育实践</h4>
+                            <p>以"青言青语"普及国防知识，践行青年责任</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="icon">📢</div>
+                            <h4>锻造青年宣讲能力</h4>
+                            <p>提炼党的理论青年化阐述方法，提升政治传播力</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="icon">📚</div>
+                            <h4>凝练抗战80周年成果</h4>
+                            <p>记录英雄事迹，输出可推广的红色教育素材</p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </section>
     </div>
@@ -1791,6 +1943,40 @@
             e.preventDefault();
         }
     }, {passive: false});
+
+    // 明信片翻转功能
+    function flipPostcard(container) {
+        container.classList.toggle('flipped');
+
+        // 添加触觉反馈（如果支持）
+        if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+        }
+    }
+
+    // 为明信片添加触摸事件优化
+    document.addEventListener('DOMContentLoaded', function () {
+        const postcardContainers = document.querySelectorAll('.postcard-container');
+
+        postcardContainers.forEach(container => {
+            // 阻止事件冒泡，避免触发父元素的点击事件
+            container.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // 添加键盘访问性
+            container.setAttribute('tabindex', '0');
+            container.setAttribute('role', 'button');
+            container.setAttribute('aria-label', '点击查看明信片正反面');
+
+            container.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    flipPostcard(this);
+                }
+            });
+        });
+    });
 </script>
 
 </body>
