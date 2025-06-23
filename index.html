@@ -71,6 +71,37 @@
             margin-bottom: 2rem;
         }
 
+        /* 新增：行程提醒样式 */
+        .schedule-tip {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.1), rgba(196, 30, 58, 0.05));
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-tip::before {
+            content: '💡';
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .schedule-tip-text {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         /* 导航栏优化 */
         nav {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -715,6 +746,10 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
+
+            .schedule-tip-text {
+                animation: none;
+            }
         }
 
         /* 响应式设计 - 超小屏幕 */
@@ -749,6 +784,15 @@
 
             .section h3 {
                 font-size: 1.1rem;
+            }
+
+            .schedule-tip {
+                padding: 0.8rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .schedule-tip-text {
+                font-size: 1rem;
             }
 
             .grid {
@@ -1112,6 +1156,11 @@
         <section id="schedule" class="section fade-in">
             <h2>五天实践行程</h2>
             <p class="text-center mb-4">以"红迹为纲、精神为魂、行动为要"，串联起青年理想、党史传承、奉献担当的逻辑主线。</p>
+
+            <!-- 新增：提醒文字 -->
+            <div class="schedule-tip">
+                <span class="schedule-tip-text">点击下方卡片查看行程规划</span>
+            </div>
 
             <div class="grid grid-2">
                 <div class="day-card"
