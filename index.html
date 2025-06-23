@@ -790,7 +790,7 @@
         .postcard-container {
             perspective: 1000px;
             width: 100%;
-            height: 400px; /* 调整基础高度 */
+            /*height: 400px; !* 调整基础高度 *!*/
             cursor: pointer;
             position: relative;
         }
@@ -885,47 +885,11 @@
         .postcard-back:not(.loaded) {
             opacity: 0.7;
         }
-        
-        /* 新增：翻转提示 */
-        .postcard-flip-hint {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .postcard-container:hover .postcard-flip-hint {
-            opacity: 1;
-        }
 
         /* 移动端优化 */
         @media (max-width: 768px) {
             .postcard-container {
                 height: 280px; /* 移动端调整高度 */
-            }
-
-            .postcard-flip-hint {
-                display: none; /* 移动端隐藏提示 */
-            }
-
-            .postcard-overlay {
-                padding: 1rem;
-            }
-
-            .postcard-overlay h4 {
-                font-size: 1rem;
-            }
-
-            .postcard-overlay p {
-                font-size: 0.8rem;
             }
 
             /* 移动端明信片比例调整 */
@@ -962,19 +926,12 @@
 
             /* 桌面端明信片容器高度优化 */
             .postcard-container {
-                height: 450px; /* 桌面端更大的显示区域 */
+                /*height: 250px; !* 桌面端更大的显示区域 *!*/
             }
 
             /* 新增：桌面端设计图片高度调整 */
             .design-item-image {
-                height: 450px;
-            }
-        }
-
-        /* 大屏幕优化 */
-        @media (min-width: 1200px) {
-            .postcard-container {
-                height: 500px; /* 大屏幕最佳显示高度 */
+                height: 350px;
             }
         }
 
@@ -1664,7 +1621,7 @@
                                     <div class="postcard-flip">
                                         <div class="postcard-front loading"
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
-                                            <div class="postcard-flip-hint">点击翻转</div>
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
                                         </div>
                                         <div class="postcard-back loading"
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
@@ -1673,17 +1630,42 @@
                                 </div>
                             </div>
                             <div class="design-item-content">
-                                <h4>橘子洲头怀古</h4>
+                                <h4>标题</h4>
                                 <p>
-                                    以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。正面展示主题图案，背面设计邮戳和地址栏。</p>
+                                    介绍</p>
                                 <div class="design-tags">
-                                    <span class="design-tag">历史文化</span>
-                                    <span class="design-tag">诗词文化</span>
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="design-item postcard-item" data-design="postcard1">
                             <div class="postcard-content-wrapper">
@@ -1691,7 +1673,7 @@
                                     <div class="postcard-flip">
                                         <div class="postcard-front loading"
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
-                                            <div class="postcard-flip-hint">点击翻转</div>
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
                                         </div>
                                         <div class="postcard-back loading"
                                              data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
@@ -1700,15 +1682,196 @@
                                 </div>
                             </div>
                             <div class="design-item-content">
-                                <h4>橘子洲头怀古</h4>
+                                <h4>标题</h4>
                                 <p>
-                                    以毛泽东青年雕塑为主视觉，配以诗词"恰同学少年，风华正茂"，传达青春理想。</p>
+                                    介绍</p>
                                 <div class="design-tags">
-                                    <span class="design-tag">历史文化</span>
-                                    <span class="design-tag">诗词文化</span>
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item postcard-item" data-design="postcard1">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item postcard-item" data-design="postcard1">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="design-item postcard-item" data-design="postcard1">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 可以添加更多明信片 -->
+
+                        <div class="design-item postcard-item" data-design="postcard2">
+                            <div class="postcard-content-wrapper">
+                                <div class="postcard-container" onclick="flipPostcard(this)">
+                                    <div class="postcard-flip">
+                                        <div class="postcard-front loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/6430350bfc70e3a61e83b2ae3557fe08.webp">
+                                            <!--<div class="postcard-flip-hint">点击翻转</div>-->
+                                        </div>
+                                        <div class="postcard-back loading"
+                                             data-bg="https://img.vaporr4s.eu.org/halo/2025/06/9832dfdf7745e29262581b8284203eb6.webp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="design-item-content">
+                                <h4>标题</h4>
+                                <p>
+                                    介绍</p>
+                                <div class="design-tags">
+                                    <span class="design-tag">标签1</span>
+                                    <span class="design-tag">标签2</span>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
