@@ -77,7 +77,7 @@
             border: 2px solid var(--primary-color);
             border-radius: 12px;
             padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
+            margin: 1rem 0; /* 减少了上下边距 */
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -1381,6 +1381,25 @@
                 height: 550px;
             }
         }
+
+        /* 新增：明信片区域专用的提示样式 */
+        .design-category .schedule-tip {
+            margin: 0.5rem 1.5rem 1rem 1.5rem; /* 专门为明信片区域调整间距 */
+        }
+
+        /* 新增：移动端明信片提示样式优化 */
+        @media (max-width: 768px) {
+            .design-category .schedule-tip {
+                margin: 0.5rem 1rem 1rem 1rem; /* 移动端减少左右边距以匹配design-items */
+            }
+        }
+
+        /* 超小屏幕优化 */
+        @media (max-width: 479px) {
+            .design-category .schedule-tip {
+                margin: 0.5rem 0.8rem 1rem 0.8rem; /* 进一步减少边距匹配更紧密的布局 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -1607,6 +1626,11 @@
                         <h3>纪念明信片设计</h3>
                     </div>
 
+                    <!-- 新增：明信片翻转提示 -->
+                    <div class="schedule-tip">
+                        <span class="schedule-tip-text">点击明信片可翻转</span>
+                    </div>
+
                     <!-- 新增明信片总介绍 -->
                     <div class="design-items">
                         <div style="background: var(--primary-light); border: 2px solid rgba(196, 30, 58, 0.2); border-radius: 8px; box-shadow: 0 2px 8px rgba(196, 30, 58, 0.1); padding: 1.5rem; grid-column: 1 / -1;">
@@ -1617,6 +1641,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="design-items">
                         <div class="design-item postcard-item" data-design="postcard1">
