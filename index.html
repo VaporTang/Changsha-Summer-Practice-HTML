@@ -96,15 +96,6 @@
             display: inline-block;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-
         /* 导航栏优化 */
         nav {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -569,22 +560,6 @@
             line-height: 1.5;
         }
 
-        .design-item .design-tags {
-            margin-top: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .design-tag {
-            background: var(--primary-light);
-            color: var(--primary-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
         .design-modal-header h3 {
             margin: 0;
             font-size: 1.5rem;
@@ -611,15 +586,6 @@
 
         .design-modal-details li:last-child {
             border-bottom: none;
-        }
-
-        .design-modal-details .detail-label {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .design-modal-details .detail-value {
-            color: var(--text-light);
         }
 
         /* 弹窗样式 */
@@ -910,10 +876,6 @@
                 height: 200px; /* 更小的屏幕进一步调整 */
             }
 
-            .postcard-overlay {
-                padding: 0.8rem;
-            }
-
             .postcard-overlay h4 {
                 font-size: 0.9rem;
             }
@@ -1091,10 +1053,6 @@
 
             .grid {
                 gap: 1rem;
-            }
-
-            .grid-4, .grid-3, .grid-2 {
-                grid-template-columns: 1fr;
             }
 
             .card {
@@ -1613,11 +1571,6 @@
                                 <h4>校旗</h4>
                                 <p>
                                     该校旗以深邃的北林绿为主要色调，象征着生机盎然的大自然与生态和谐，并通过左右排布实现视觉上的平衡。凸显了北京林业大学以森林生态为核心的学科特色与可持续发展的理念。</p>
-                                <!--<div class="design-tags">
-                                    <span class="design-tag">红色主题</span>
-                                    <span class="design-tag">地标元素</span>
-                                    <span class="design-tag">团队标识</span>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -2222,9 +2175,7 @@
         modalTitle.textContent = title;
 
         // 使用Microsoft Office Online
-        const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(filePath)}`;
-
-        wordFrame.src = viewerUrl;
+        wordFrame.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(filePath)}`;
         modal.style.display = 'block';
 
         // 防止背景滚动
