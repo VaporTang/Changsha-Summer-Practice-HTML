@@ -787,6 +787,10 @@
             transform: translateY(-5px);
         }
 
+        .design-items + .design-items {
+            padding-top: 0.5rem;
+        }
+
         /* 新增：明信片翻转效果样式 */
         .postcard-container {
             perspective: 1000px;
@@ -1397,7 +1401,7 @@
         /* 超小屏幕优化 */
         @media (max-width: 479px) {
             .design-category .schedule-tip {
-                margin: 0.5rem 0.8rem 1rem 0.8rem; /* 进一步减少边距匹配更紧密的布局 */
+                margin: 0.5rem 0.8rem 0.5rem 0.8rem; /* 进一步减少边距匹配更紧密的布局 */
             }
         }
     </style>
