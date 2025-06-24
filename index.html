@@ -1362,6 +1362,37 @@
                 margin: 0.5rem 0.8rem 0.5rem 0.8rem; /* 进一步减少边距匹配更紧密的布局 */
             }
         }
+
+        /* 新增：响应式提示语样式 */
+        .mobile-tip {
+            display: none;
+        }
+
+        .desktop-tip {
+            display: inline-block;
+        }
+
+        /* 移动端显示移动端提示 */
+        @media (max-width: 768px) {
+            .mobile-tip {
+                display: inline-block;
+            }
+
+            .desktop-tip {
+                display: none;
+            }
+        }
+
+        /* 触摸设备优化 */
+        @media (pointer: coarse) {
+            .mobile-tip {
+                display: inline-block;
+            }
+
+            .desktop-tip {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1583,9 +1614,10 @@
                         <h3>纪念明信片设计</h3>
                     </div>
 
-                    <!-- 新增：明信片翻转提示 -->
+                    <!-- 新增：明信片翻转提示 - 响应式版本 -->
                     <div class="schedule-tip">
-                        <span class="schedule-tip-text">点击明信片可翻转</span>
+                        <span class="schedule-tip-text mobile-tip">点击明信片可翻转</span>
+                        <span class="schedule-tip-text desktop-tip">鼠标悬停在明信片上可翻转</span>
                     </div>
 
                     <!-- 新增明信片总介绍 -->
@@ -1935,6 +1967,7 @@
 
     document.addEventListener('touchmove', function (e) {
         // 边缘滑动打开菜单
+
         if (!isDragging) return;
         currentX = e.touches[0].clientX;
 
@@ -2289,6 +2322,5 @@
         });
     });
 </script>
-
 </body>
 </html>
