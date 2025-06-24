@@ -1919,8 +1919,6 @@
 
 <script>
     // 触摸事件优化
-    let touchStartY = 0;
-    let touchEndY = 0;
     let touchStartX = 0;
     let currentX = 0;
     let isDragging = false;
@@ -1959,23 +1957,8 @@
     }, {passive: true});
 
     document.addEventListener('touchend', function (e) {
-        touchEndY = e.changedTouches[0].screenY;
         isDragging = false;
-        handleSwipe();
     }, {passive: true});
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartY - touchEndY;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // 向上滑动逻辑
-            } else {
-                // 向下滑动逻辑
-            }
-        }
-    }
 
     // 新增：明信片懒加载功能
     function initPostcardLazyLoading() {
