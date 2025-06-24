@@ -528,7 +528,8 @@
 
         .design-item-image {
             width: 100%;
-            height: 200px;
+            /*height: 200px;*/
+            aspect-ratio: 3 / 2;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -790,7 +791,7 @@
         .postcard-container {
             perspective: 1000px;
             width: 100%;
-            /*height: 400px; !* 调整基础高度 *!*/
+            min-height: 200px;
             cursor: pointer;
             position: relative;
         }
@@ -922,16 +923,6 @@
         @media (min-width: 769px) {
             .menu-toggle {
                 display: none !important;
-            }
-
-            /* 桌面端明信片容器高度优化 */
-            .postcard-container {
-                /*height: 250px; !* 桌面端更大的显示区域 *!*/
-            }
-
-            /* 新增：桌面端设计图片高度调整 */
-            .design-item-image {
-                height: 350px;
             }
         }
 
@@ -1381,12 +1372,13 @@
 
             /* 桌面端明信片容器高度优化 */
             .postcard-container {
-                height: 450px; /* 桌面端更大的显示区域 */
+                /*height: 250px; !* 桌面端更大的显示区域 *!*/
+                aspect-ratio: 1.41 / 1;
             }
 
             /* 新增：桌面端设计图片高度调整 */
             .design-item-image {
-                height: 450px;
+                height: 550px;
             }
         }
     </style>
@@ -1875,34 +1867,35 @@
 
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- 预期成果 -->
-                <section id="achievements" class="section fade-in">
-                    <h2>预期目标与成果</h2>
 
-                    <div class="grid grid-4">
-                        <div class="achievement-item">
-                            <div class="icon">🚩</div>
-                            <h4>深化红色基因传承</h4>
-                            <p>重走红色足迹，体悟建党初心与抗战精神</p>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="icon">🛡️</div>
-                            <h4>创新国防教育实践</h4>
-                            <p>以"青言青语"普及国防知识，践行青年责任</p>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="icon">📢</div>
-                            <h4>锻造青年宣讲能力</h4>
-                            <p>提炼党的理论青年化阐述方法，提升政治传播力</p>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="icon">📚</div>
-                            <h4>凝练抗战80周年成果</h4>
-                            <p>记录英雄事迹，输出可推广的红色教育素材</p>
-                        </div>
-                    </div>
-                </section>
+        <!-- 预期成果 -->
+        <section id="achievements" class="section fade-in">
+            <h2>预期目标与成果</h2>
+
+            <div class="grid grid-4">
+                <div class="achievement-item">
+                    <div class="icon">🚩</div>
+                    <h4>深化红色基因传承</h4>
+                    <p>重走红色足迹，体悟建党初心与抗战精神</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">🛡️</div>
+                    <h4>创新国防教育实践</h4>
+                    <p>以"青言青语"普及国防知识，践行青年责任</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">📢</div>
+                    <h4>锻造青年宣讲能力</h4>
+                    <p>提炼党的理论青年化阐述方法，提升政治传播力</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="icon">📚</div>
+                    <h4>凝练抗战80周年成果</h4>
+                    <p>记录英雄事迹，输出可推广的红色教育素材</p>
+                </div>
             </div>
         </section>
     </div>
