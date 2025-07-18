@@ -1393,6 +1393,362 @@
                 display: none;
             }
         }
+
+        /* 新增：vlog视频样式 */
+        .vlog-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .vlog-item {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .vlog-item:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .vlog-thumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+        .vlog-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(196, 30, 58, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .vlog-item:hover .vlog-thumbnail::before {
+            opacity: 1;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(196, 30, 58, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .vlog-item:hover .play-button {
+            background: var(--primary-color);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 8px 25px rgba(196, 30, 58, 0.4);
+        }
+
+        .play-button span {
+            margin-left: 3px; /* 播放按钮视觉居中 */
+        }
+
+        .vlog-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .vlog-content {
+            padding: 1.5rem;
+        }
+
+        .vlog-content h4 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .vlog-content p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .vlog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .vlog-date {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .vlog-location {
+            font-weight: 500;
+        }
+
+        /* 视频弹窗样式 */
+        .video-modal-content {
+            max-width: 1200px;
+            height: auto;
+            max-height: 90vh;
+        }
+
+        .video-modal-body {
+            height: auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-modal-body video {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            background: #000;
+        }
+
+        .video-description {
+            padding: 1.5rem;
+            background: var(--bg-color);
+        }
+
+        .video-description p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 移动端vlog优化 */
+        @media (max-width: 768px) {
+            .vlog-gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .vlog-item {
+                margin: 0 0.5rem;
+            }
+
+            .play-button {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .vlog-content {
+                padding: 1rem;
+            }
+
+            .vlog-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .vlog-content p {
+                font-size: 0.9rem;
+            }
+
+            .vlog-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .video-modal-content {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .video-modal_body video {
+                max-height: 60vh;
+            }
+
+            .video-description {
+                padding: 1rem;
+            }
+        }
+
+        /* 超小屏幕优化 */
+        @media (max-width: 479px) {
+            .vlog-gallery {
+                gap: 1rem;
+            }
+
+            .vlog-item {
+                margin: 0;
+            }
+
+            .play-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .vlog-content {
+                padding: 0.8rem;
+            }
+
+            .vlog-content h4 {
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+
+            .vlog-content p {
+                font-size: 0.85rem;
+            }
+
+            .vlog-duration {
+                font-size: 0.75rem;
+                padding: 2px 6px;
+            }
+        }
+
+        /* 新增：视频播放弹窗样式 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-modal-content {
+            position: relative;
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .video-modal-header {
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .video-modal-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .video-modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .video-modal-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .video-modal-body video {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            background: #000;
+            border-radius: 8px;
+        }
+
+        .video-description {
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 8px;
+        }
+
+        .video-description p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 移动端视频弹窗优化 */
+        @media (max-width: 768px) {
+            .video-modal-content {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .video-modal-body video {
+                max-height: 50vh;
+            }
+
+            .video-description {
+                padding: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1411,6 +1767,7 @@
         <ul id="navMenu">
             <li><a href="#about">项目概述<span class="nav-indicator"></span></a></li>
             <li><a href="#schedule">实践行程<span class="nav-indicator"></span></a></li>
+            <li><a href="#vlogs">vlog视频<span class="nav-indicator"></span></a></li>
             <li><a href="#designs">原创设计<span class="nav-indicator"></span></a></li>
             <li><a href="#achievements">预期成果<span class="nav-indicator"></span></a></li>
             <li><a href="#team">团队成员<span class="nav-indicator"></span></a></li>
@@ -1503,6 +1860,110 @@
                     <p class="location">长沙党史馆 新民学会旧址</p>
                     <p>
                         系统学习新民主主义革命时期湖湘党组织的诞生、抗争与发展。通过党史调研，挖掘湖南共产党人坚守初心的动人故事。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- vlog视频 -->
+        <section id="vlogs" class="section fade-in">
+            <h2>vlog视频</h2>
+            <p class="text-center mb-4">
+                记录我们在长沙的红色足迹，用镜头讲述青春与历史的对话。</p>
+
+            <!-- 新增：视频播放提醒 -->
+            <div class="schedule-tip">
+                <span class="schedule-tip-text">点击下方视频预览图开始播放</span>
+            </div>
+
+            <div class="vlog-gallery">
+                <div class="vlog-item" onclick="openVideoModal('https://your-cloudflare-r2-domain.com/vlog1.mp4', '第一天：青春对话先辈', '橘子洲头的青春宣言')">
+                    <div class="vlog-thumbnail"
+                         style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/1a586506b56d62e11ffdd935a6dca807.jpgg');">
+                        <div class="play-button">
+                            <span>▶</span>
+                        </div>
+                        <div class="vlog-duration">05:30</div>
+                    </div>
+                    <div class="vlog-content">
+                        <h4>第一天：青春对话先辈</h4>
+                        <p>橘子洲头的青春宣言</p>
+                        <div class="vlog-meta">
+                            <span class="vlog-date">2025-07-11</span>
+                            <span class="vlog-location">📍 橘子洲头</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vlog-item" onclick="openVideoModal('https://your-cloudflare-r2-domain.com/vlog2.mp4', '第二天：探寻革命启蒙', '湖南第一师范的求学之路')">
+                    <div class="vlog-thumbnail"
+                         style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/54bdeecdd2a5d2a70b2271664eb6c6b6.jpgg');">
+                        <div class="play-button">
+                            <span>▶</span>
+                        </div>
+                        <div class="vlog-duration">06:15</div>
+                    </div>
+                    <div class="vlog-content">
+                        <h4>第二天：探寻革命启蒙</h4>
+                        <p>湖南第一师范的求学之路</p>
+                        <div class="vlog-meta">
+                            <span class="vlog-date">2025-07-12</span>
+                            <span class="vlog-location">📍 湖南第一师范</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vlog-item" onclick="openVideoModal('https://your-cloudflare-r2-domain.com/vlog3.mp4', '第三天：缅怀热血英魂', '烈士公园的志愿服务')">
+                    <div class="vlog-thumbnail"
+                         style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/6c6f5b6f8f3e15909ea154e8406f6697.jpgg');">
+                        <div class="play-button">
+                            <span>▶</span>
+                        </div>
+                        <div class="vlog-duration">07:22</div>
+                    </div>
+                    <div class="vlog-content">
+                        <h4>第三天：缅怀热血英魂</h4>
+                        <p>烈士公园的志愿服务</p>
+                        <div class="vlog-meta">
+                            <span class="vlog-date">2025-07-13</span>
+                            <span class="vlog-location">📍 烈士公园</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vlog-item" onclick="openVideoModal('https://your-cloudflare-r2-domain.com/vlog4.mp4', '第四天：回溯烽火岁月', '岳麓山的抗战记忆')">
+                    <div class="vlog-thumbnail"
+                         style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/6f179b25b542e8b5df1525b905a33697.jpgg');">
+                        <div class="play-button">
+                            <span>▶</span>
+                        </div>
+                        <div class="vlog-duration">08:10</div>
+                    </div>
+                    <div class="vlog-content">
+                        <h4>第四天：回溯烽火岁月</h4>
+                        <p>岳麓山的抗战记忆</p>
+                        <div class="vlog-meta">
+                            <span class="vlog-date">2025-07-14</span>
+                            <span class="vlog-location">📍 岳麓山抗战文化园</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vlog-item" onclick="openVideoModal('https://your-cloudflare-r2-domain.com/vlog5.mp4', '第五天：解码湖湘党史', '党史馆的深度学习')">
+                    <div class="vlog-thumbnail"
+                         style="background-image: url('https://img.vaporr4s.eu.org/halo/2025/06/2fe26ba3f308704f789bb6b5d2ace2d6.jpgg');">
+                        <div class="play-button">
+                            <span>▶</span>
+                        </div>
+                        <div class="vlog-duration">09:45</div>
+                    </div>
+                    <div class="vlog-content">
+                        <h4>第五天：解码湖湘党史</h4>
+                        <p>党史馆的深度学习</p>
+                        <div class="vlog-meta">
+                            <span class="vlog-date">2025-07-15</span>
+                            <span class="vlog-location">📍 长沙党史馆</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1949,6 +2410,25 @@
     </div>
 </div>
 
+<!-- 视频播放弹窗 -->
+<div class="modal" id="videoModal">
+    <div class="modal-content video-modal-content">
+        <div class="modal-header">
+            <h3 id="videoModalTitle">视频播放</h3>
+            <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+        </div>
+        <div class="modal-body video-modal-body">
+            <video id="modalVideo" controls preload="metadata" poster="">
+                <source src="" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <div class="video-description">
+                <p id="videoDescription"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // 触摸事件优化
     let touchStartX = 0;
@@ -2320,6 +2800,73 @@
         postcardItems.forEach(container => {
             container.removeAttribute('onclick');
         });
+    });
+
+    // 视频播放功能
+    function openVideoModal(videoSrc, title, description) {
+        const modal = document.getElementById('videoModal');
+        const modalTitle = document.getElementById('videoModalTitle');
+        const modalVideo = document.getElementById('modalVideo');
+        const videoDescription = document.getElementById('videoDescription');
+
+        modalTitle.textContent = title;
+        videoDescription.textContent = description;
+        
+        // 设置视频源
+        modalVideo.src = videoSrc;
+        modalVideo.load(); // 重新加载视频
+        
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // 添加触觉反馈
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50);
+        }
+    }
+
+    // 关闭视频弹窗
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+
+        modal.style.display = 'none';
+        modalVideo.pause(); // 暂停视频
+        modalVideo.src = ''; // 清空视频源
+        document.body.style.overflow = 'auto';
+    }
+
+    // 点击弹窗外部关闭视频
+    window.addEventListener('click', function (event) {
+        const videoModal = document.getElementById('videoModal');
+        if (event.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+
+    // ESC键关闭视频弹窗
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            const videoModal = document.getElementById('videoModal');
+            if (videoModal.style.display === 'block') {
+                closeVideoModal();
+            }
+        }
+    });
+
+    // 移动端导航菜单更新
+    document.addEventListener('DOMContentLoaded', function () {
+        // 更新移动端菜单动画延迟
+        const style = document.createElement('style');
+        style.textContent = `
+            nav ul.active li:nth-child(1) { animation-delay: 0.1s; }
+            nav ul.active li:nth-child(2) { animation-delay: 0.2s; }
+            nav ul.active li:nth-child(3) { animation-delay: 0.3s; }
+            nav ul.active li:nth-child(4) { animation-delay: 0.4s; }
+            nav ul.active li:nth-child(5) { animation-delay: 0.5s; }
+            nav ul.active li:nth-child(6) { animation-delay: 0.6s; }
+        `;
+        document.head.appendChild(style);
     });
 </script>
 </body>
