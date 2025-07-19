@@ -58,6 +58,7 @@
 .
 └── index.html      # 包含HTML结构、CSS样式和JavaScript脚本
 └── README.md       # 项目说明文件
+└── LICENSE         # 项目许可证
 ```
 
 **代码模块划分 (在 `index.html` 内部):**
@@ -110,7 +111,7 @@
 ```
 MIT License
 
-Copyright (c) 2025 [请在此处填写您的姓名或团队名称]
+Copyright (c) 2025 Jin Liang Tang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
